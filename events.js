@@ -69,7 +69,7 @@ const IHYA_EVENTS = [
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
     // 2. Change null to the filename: "dec-28-reflection.jpg"
-    flyer: dec-28-reflection.jpg
+    flyer: null
   },
 
   // ──────────────────────────────────────────
@@ -87,7 +87,7 @@ const IHYA_EVENTS = [
     datetime: "Saturday, January 11, 2025 | 5:00 PM - 8:00 PM",
     location: "789 Event Space, Manhattan, NY 10016",
     
-    flyer: dec-28-reflection.jpg
+    flyer: "dec-28-reflection.jpg"
   },
 
   // ──────────────────────────────────────────
