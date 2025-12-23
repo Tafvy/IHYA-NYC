@@ -48,7 +48,7 @@ const IHYA_EVENTS = [
     
     // Flyer image - set to null to use placeholder, or add filename
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
-    flyer: dec-28-reflection.jpg
+    flyer: "dec-28-reflection.jpg"
   },
 
   // ──────────────────────────────────────────
