@@ -48,7 +48,7 @@ const IHYA_EVENTS = [
     
     // Flyer image - set to null to use placeholder, or add filename
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
-    flyer: null
+    flyer: dec-28-reflection.jpg
   },
 
   // ──────────────────────────────────────────
@@ -87,7 +87,7 @@ const IHYA_EVENTS = [
     datetime: "Saturday, January 11, 2025 | 5:00 PM - 8:00 PM",
     location: "789 Event Space, Manhattan, NY 10016",
     
-    flyer: null
+    flyer: dec-28-reflection.jpg
   },
 
   // ──────────────────────────────────────────
