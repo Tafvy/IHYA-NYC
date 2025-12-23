@@ -44,7 +44,7 @@ const IHYA_EVENTS = [
     
     // Event details (these appear below the flyer - users can copy/paste)
     datetime: "Every Thursday, 7:30 PM - 9:00 PM",
-    location: "123 Community Center, New York, NY 10001",
+    location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     // Flyer image - set to null to use placeholder, or add filename
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
