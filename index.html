@@ -29,15 +29,69 @@
         .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
         .mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
         .mobile-overlay.active { display: block; }
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 4% 4rem; background: linear-gradient(180deg, var(--ihya-cream) 0%, var(--ihya-sand) 100%); }
-        .hero-logo { width: 200px; margin-bottom: 2rem; animation: fadeInUp 0.8s ease forwards; }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--ihya-green-dark); margin-bottom: 1.5rem; animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0; }
-        .hero p { font-size: 1.2rem; color: var(--ihya-text-light); max-width: 600px; margin: 0 auto 2.5rem; animation: fadeInUp 0.8s ease 0.4s forwards; opacity: 0; }
+        
+        /* --- UPDATED HERO SECTION --- */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 8rem 4% 4rem; 
+            /* Added Background Image with Dark Overlay */
+            background: linear-gradient(rgba(19, 67, 50, 0.8), rgba(19, 67, 50, 0.6)), url('WhatsApp Image 2025-12-24 at 17.18.10.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+        }
+        
+        /* Updated Logo to be White for Dark Background */
+        .hero-logo { 
+            width: 200px; 
+            margin-bottom: 2rem; 
+            animation: fadeInUp 0.8s ease forwards; 
+            filter: brightness(0) invert(1); /* Turns logo white */
+        }
+        
+        /* Updated Headings to White */
+        .hero h1 { 
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            color: var(--ihya-white); 
+            margin-bottom: 1.5rem; 
+            animation: fadeInUp 0.8s ease 0.2s forwards; 
+            opacity: 0; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        /* Updated Paragraph to White/Cream */
+        .hero p { 
+            font-size: 1.2rem; 
+            color: var(--ihya-cream); 
+            max-width: 600px; 
+            margin: 0 auto 2.5rem; 
+            animation: fadeInUp 0.8s ease 0.4s forwards; 
+            opacity: 0; 
+        }
+        
         .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.6s forwards; opacity: 0; }
         .btn-primary { background: var(--ihya-green); color: var(--ihya-white); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(27, 94, 65, 0.35); }
-        .btn-primary:hover { background: var(--ihya-green-dark); transform: translateY(-2px); }
-        .btn-secondary { background: transparent; color: var(--ihya-green); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid var(--ihya-green); transition: all 0.3s ease; }
-        .btn-secondary:hover { background: var(--ihya-green); color: var(--ihya-white); }
+        .btn-primary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); transform: translateY(-2px); }
+        
+        /* Updated Secondary Button to White Outline */
+        .btn-secondary { 
+            background: transparent; 
+            color: var(--ihya-white); 
+            padding: 1rem 2.5rem; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 500; 
+            border: 2px solid var(--ihya-white); 
+            transition: all 0.3s ease; 
+        }
+        .btn-secondary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); }
+        
         section { padding: 5rem 4%; }
         .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
         .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--ihya-green-dark); margin-bottom: 1rem; }
@@ -169,9 +223,7 @@
             <h2>Upcoming Events</h2>
             <p>Join us for gatherings that nourish the soul and strengthen our community</p>
         </div>
-        <!-- Desktop Grid - populated by JavaScript -->
         <div class="events-grid" id="eventsGrid"></div>
-        <!-- Mobile Carousel - populated by JavaScript -->
         <div class="events-carousel">
             <div class="carousel-container" id="eventsCarousel"></div>
             <div class="carousel-dots" id="carouselDots"></div>
@@ -256,7 +308,6 @@
         <p style="margin-top:1.5rem;">© 2025 IHYA NYC. All rights reserved.</p>
     </footer>
 
-    <!-- Load events configuration -->
     <script src="events.js"></script>
     
     <script>
