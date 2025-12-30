@@ -36,7 +36,7 @@ const IHYA_EVENTS = [
     id: "weekly-halaqah",
     type: "weekly",                           // "weekly" or "monthly"
     title: "Brothers' Weekly Halaqah",
-    description: "Join us for our weekly gathering of reflection, discussion, and brotherhood. A consistent space to reconnect with your faith and community.",
+    description: "Join us for our first halaqa of the new year! Our esteemed speaker Mufti Tofael Nuruddin will be joining us as we reflect on the lives and qualities of the Sahaba and righteous men who shaped this Ummah رَضِيَ اللَّهُ عَنْهُمْ",
     
     // Date display on flyer placeholder (if no flyer image)
     dateDisplay: "Every",
@@ -48,7 +48,7 @@ const IHYA_EVENTS = [
     
     // Flyer image - set to null to use placeholder, or add filename
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
-    flyer: "dec-28-reflection.jpg"
+    flyer: "Men of Character Following the Path of Pious Predecessors.jpg"
   },
 
   // ──────────────────────────────────────────
