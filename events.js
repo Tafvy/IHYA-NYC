@@ -48,7 +48,7 @@ const IHYA_EVENTS = [
     
     // Flyer image - set to null to use placeholder, or add filename
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
-    flyer: "Men of Character Following the Path of Pious Predecessors.JPG"
+    flyer: "Men of Character Following the Path of Pious Predecessors.jpg"
   },
 
   // ──────────────────────────────────────────
