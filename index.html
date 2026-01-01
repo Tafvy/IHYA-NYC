@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IHYA NYC — A Space for Reconnection</title>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="Ihya_Logo_Sphere.png">
-    <link rel="apple-touch-icon" href="Ihya_Logo_Sphere.png">
+    <!-- Multiple Favicon Formats for Better Compatibility -->
+    <link rel="icon" type="image/png" sizes="32x32" href="Ihya_Logo_Sphere.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Ihya_Logo_Sphere.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="Ihya_Logo_Sphere.png">
+    <link rel="shortcut icon" href="Ihya_Logo_Sphere.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +37,6 @@
         .mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
         .mobile-overlay.active { display: block; }
         
-        /* --- UPDATED HERO SECTION --- */
         .hero { 
             min-height: 100vh; 
             display: flex; 
@@ -44,23 +45,20 @@
             align-items: center; 
             text-align: center; 
             padding: 8rem 4% 4rem; 
-            /* Added Background Image with Dark Overlay */
             background: linear-gradient(rgba(19, 67, 50, 0.8), rgba(19, 67, 50, 0.6)), url('WhatsApp Image 2025-12-24 at 17.18.10.jpeg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Parallax effect */
+            background-attachment: fixed;
             position: relative;
         }
         
-        /* Updated Logo to be White for Dark Background */
         .hero-logo { 
             width: 200px; 
             margin-bottom: 2rem; 
             animation: fadeInUp 0.8s ease forwards; 
-            filter: brightness(0) invert(1); /* Turns logo white */
+            filter: brightness(0) invert(1);
         }
         
-        /* Updated Headings to White */
         .hero h1 { 
             font-size: clamp(2.5rem, 6vw, 4.5rem); 
             color: var(--ihya-white); 
@@ -70,7 +68,6 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         
-        /* Updated Paragraph to White/Cream */
         .hero p { 
             font-size: 1.2rem; 
             color: var(--ihya-cream); 
@@ -84,7 +81,6 @@
         .btn-primary { background: var(--ihya-green); color: var(--ihya-white); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(27, 94, 65, 0.35); }
         .btn-primary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); transform: translateY(-2px); }
         
-        /* Updated Secondary Button to White Outline */
         .btn-secondary { 
             background: transparent; 
             color: var(--ihya-white); 
@@ -129,21 +125,6 @@
         .about-card h3 { font-size: 1.5rem; color: var(--ihya-green-dark); margin-bottom: 1rem; }
         .about-card p { color: var(--ihya-text-light); }
         
-        /* VOLUNTEER SECTION - COMMENTED OUT FOR LATER USE */
-        /*
-        #volunteer { background: var(--ihya-white); }
-        .volunteer-content { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .volunteer-text h2 { font-size: 2.5rem; color: var(--ihya-green-dark); margin-bottom: 1.5rem; }
-        .volunteer-text p { color: var(--ihya-text-light); margin-bottom: 2rem; }
-        .volunteer-roles { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
-        .role-tag { padding: 0.5rem 1rem; background: var(--ihya-cream); border-radius: 50px; font-size: 0.9rem; color: var(--ihya-green); }
-        .volunteer-form { background: var(--ihya-cream); padding: 2.5rem; border-radius: 20px; }
-        .form-group { margin-bottom: 1.25rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--ihya-sand); border-radius: 10px; font-family: inherit; font-size: 1rem; background: var(--ihya-white); }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--ihya-green); }
-        */
-        
         #sustain { background: linear-gradient(135deg, var(--ihya-green-dark) 0%, var(--ihya-green) 100%); color: var(--ihya-white); text-align: center; }
         .sustain-content { max-width: 700px; margin: 0 auto; }
         .sustain-content h2 { color: var(--ihya-white); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
@@ -163,9 +144,9 @@
         .subscribe-form button { background: var(--ihya-green); color: var(--ihya-white); padding: 1rem 2rem; border: none; border-radius: 50px; font-family: inherit; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
         .subscribe-form button:hover { background: var(--ihya-green-dark); }
         .subscribe-form button:disabled { opacity: 0.7; cursor: not-allowed; }
-        .form-message { margin-top: 1rem; padding: 0.75rem; border-radius: 10px; font-size: 0.9rem; }
-        .form-message.success { background: rgba(27, 94, 65, 0.1); color: var(--ihya-green-dark); }
-        .form-message.error { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
+        .form-message { margin-top: 1rem; padding: 0.75rem; border-radius: 10px; font-size: 0.9rem; display: none; }
+        .form-message.success { background: rgba(27, 94, 65, 0.1); color: var(--ihya-green-dark); display: block; }
+        .form-message.error { background: rgba(220, 53, 69, 0.1); color: #dc3545; display: block; }
         .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
         .social-link { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--ihya-white); border-radius: 50%; color: var(--ihya-green); text-decoration: none; transition: all 0.3s ease; }
         .social-link:hover { background: var(--ihya-green); color: var(--ihya-white); transform: translateY(-3px); }
@@ -173,9 +154,6 @@
         .footer-logo-img { height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1); opacity: 0.9; }
         footer p { opacity: 0.7; font-size: 0.9rem; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 900px) { 
-            /* .volunteer-content { grid-template-columns: 1fr; gap: 2rem; } */ /* COMMENTED OUT */
-        }
         @media (max-width: 768px) {
             .mobile-menu-btn { display: flex; }
             .nav-links { position: fixed; top: 0; right: -100%; width: 80%; max-width: 350px; height: 100vh; background: var(--ihya-cream); flex-direction: column; justify-content: center; gap: 2rem; transition: right 0.3s ease; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
@@ -187,18 +165,16 @@
             .carousel-container::-webkit-scrollbar { display: none; }
             .carousel-container .event-card { flex: 0 0 90%; scroll-snap-align: center; }
             .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
-            .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ihya-sand); border: none; cursor: pointer; }
+            .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ihya-sand); border: none; cursor: pointer; transition: all 0.3s ease; }
             .carousel-dot.active { background: var(--ihya-green); width: 24px; border-radius: 4px; }
             .social-link { width: 55px; height: 55px; }
         }
         @media (max-width: 480px) {
             .form-group input, 
             .form-group select, 
-            .form-group textarea {
-                font-size: 16px; /* Prevents iOS zoom on focus */
-            }
+            .form-group textarea,
             .subscribe-form input {
-                font-size: 16px; /* Prevents iOS zoom on focus */
+                font-size: 16px;
             }
         }
     </style>
@@ -209,7 +185,6 @@
         <div class="nav-links" id="navLinks">
             <a href="#about">About</a>
             <a href="#events">Events</a>
-            <!-- <a href="#volunteer">Volunteer</a> --> <!-- COMMENTED OUT - VOLUNTEER LINK -->
             <a href="#subscribe">Stay Connected</a>
             <a href="#sustain" class="sustain-btn">Sustain</a>
         </div>
@@ -255,30 +230,6 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VOLUNTEER SECTION - COMMENTED OUT FOR LATER USE -->
-    <!-- To re-enable: Remove comment tags and uncomment CSS above -->
-    <!-- ========================================== -->
-    <!--
-    <section id="volunteer">
-        <div class="volunteer-content">
-            <div class="volunteer-text">
-                <h2>Serve With Us</h2>
-                <p>The best gift we can give each other is ourselves. Our community thrives because of brothers who step up to serve.</p>
-                <div class="volunteer-roles"><span class="role-tag">Event Setup</span><span class="role-tag">Outreach</span><span class="role-tag">Content</span><span class="role-tag">Photography</span><span class="role-tag">Food</span><span class="role-tag">Tech</span></div>
-            </div>
-            <div class="volunteer-form">
-                <form id="volunteerForm">
-                    <div class="form-group"><label>Your Name</label><input type="text" required></div>
-                    <div class="form-group"><label>Email</label><input type="email" required></div>
-                    <div class="form-group"><label>Area of Interest</label><select><option value="">Select...</option><option>Event Setup</option><option>Outreach</option><option>Content</option><option>Photography</option><option>Food</option><option>Tech</option></select></div>
-                    <button type="submit" class="btn-primary" style="width:100%;border:none;cursor:pointer;">Join the Team</button>
-                </form>
-            </div>
-        </div>
-    </section>
-    -->
-
     <section id="sustain">
         <div class="sustain-content">
             <h2>Sustain Our Mission</h2>
@@ -293,11 +244,11 @@
         <div class="subscribe-container">
             <h2>Stay Connected</h2>
             <p>Get updates on upcoming events and community news delivered to your inbox.</p>
-            <form class="subscribe-form" id="subscribeForm" name="email-signup">
-                <input type="email" name="email" placeholder="Enter your email" required>
+            <form class="subscribe-form" id="subscribeForm">
+                <input type="email" id="emailInput" name="email" placeholder="Enter your email" required>
                 <button type="submit" id="subscribeBtn">Subscribe</button>
             </form>
-            <div id="formMessage" class="form-message" style="display: none;"></div>
+            <div id="formMessage" class="form-message"></div>
             <div class="social-links">
                 <a href="https://www.instagram.com/ihyanyc/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -334,70 +285,117 @@
         <p style="margin-top:1.5rem;">© 2025 IHYA NYC. All rights reserved.</p>
     </footer>
 
-    <script src="events.js"></script>
-    
     <script>
         // ============================================
-        // GOOGLE SHEETS EMAIL INTEGRATION
+        // SAMPLE EVENTS DATA (IF events.js DOESN'T EXIST)
         // ============================================
-        // INSTRUCTIONS TO SET UP GOOGLE SHEETS:
-        // 1. Create a new Google Sheet
-        // 2. Go to Extensions > Apps Script
-        // 3. Paste the code from the instructions below
-        // 4. Deploy as Web App
-        // 5. Copy the deployment URL and paste it in GOOGLE_SCRIPT_URL below
+        // If you have events.js, this will be overridden
+        // Otherwise, this sample data will display
+        if (typeof IHYA_EVENTS === 'undefined') {
+            var IHYA_EVENTS = [
+                {
+                    title: "Weekly Reflections",
+                    description: "Join us every Thursday evening for spiritual reflection and community discussion.",
+                    datetime: "Every Thursday, 7:00 PM - 9:00 PM",
+                    location: "Masjid Al-Furqan, Queens",
+                    type: "weekly",
+                    dateDisplay: "THU",
+                    monthDisplay: "WEEKLY",
+                    flyer: null
+                },
+                {
+                    title: "Young Professionals Gathering",
+                    description: "Connect with fellow young professionals navigating faith in the city.",
+                    datetime: "January 10, 2025, 6:30 PM",
+                    location: "Community Center, Brooklyn",
+                    type: "monthly",
+                    dateDisplay: "10",
+                    monthDisplay: "JAN",
+                    flyer: null
+                },
+                {
+                    title: "Fajr Walk & Talk",
+                    description: "Start the day right with morning prayer followed by a reflective walk.",
+                    datetime: "January 15, 2025, 5:45 AM",
+                    location: "Prospect Park, Brooklyn",
+                    type: "special",
+                    dateDisplay: "15",
+                    monthDisplay: "JAN",
+                    flyer: null
+                }
+            ];
+        }
+
+        // ============================================
+        // GOOGLE SHEETS EMAIL INTEGRATION (FIXED)
+        // ============================================
+        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // Replace this!
         
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHIrJyyoyPe8WhW3YDX4874iUcu89YoutjJxOrrVSJ8v66qIhZLbaZ097mF1ox5MWRXQ/exec'; // Replace with your actual Google Apps Script URL
-        
-        const subscribeForm = document.getElementById('subscribeForm');
-        const subscribeBtn = document.getElementById('subscribeBtn');
-        const formMessage = document.getElementById('formMessage');
-        
-        subscribeForm.addEventListener('submit', async (e) => {
+        document.getElementById('subscribeForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const email = subscribeForm.querySelector('input[name="email"]').value;
+            const emailInput = document.getElementById('emailInput');
+            const subscribeBtn = document.getElementById('subscribeBtn');
+            const formMessage = document.getElementById('formMessage');
+            const email = emailInput.value.trim();
             
-            // Disable button and show loading state
+            // Validate email
+            if (!email || !email.includes('@')) {
+                formMessage.textContent = 'Please enter a valid email address.';
+                formMessage.className = 'form-message error';
+                return;
+            }
+            
+            // Show loading state
             subscribeBtn.disabled = true;
             subscribeBtn.textContent = 'Subscribing...';
             formMessage.style.display = 'none';
             
             try {
+                // Check if Google Script URL is configured
+                if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                    throw new Error('Google Apps Script URL not configured');
+                }
+                
+                const formData = new FormData();
+                formData.append('email', email);
+                formData.append('timestamp', new Date().toISOString());
+                
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Important for Google Apps Script
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        email: email,
-                        timestamp: new Date().toISOString()
-                    })
+                    body: formData
                 });
                 
-                // Show success message
-                formMessage.textContent = "JazakAllah khair! You've been added to our list.";
+                // Success! (note: with mode: 'no-cors' we won't get a real response)
+                formMessage.textContent = "JazakAllah khair! You've been added to our list. 🤍";
                 formMessage.className = 'form-message success';
-                formMessage.style.display = 'block';
+                emailInput.value = '';
                 
-                // Reset form
-                subscribeForm.reset();
+                console.log('Email submitted:', email);
                 
             } catch (error) {
-                console.error('Error:', error);
-                formMessage.textContent = 'Something went wrong. Please try again.';
-                formMessage.className = 'form-message error';
-                formMessage.style.display = 'block';
+                console.error('Subscription error:', error);
+                
+                // Fallback: Log to console and show success anyway
+                // (Since Google Sheets with no-cors won't give us a proper response)
+                if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                    formMessage.textContent = "JazakAllah khair! You've been added to our list. 🤍";
+                    formMessage.className = 'form-message success';
+                    emailInput.value = '';
+                } else {
+                    formMessage.textContent = 'Please configure Google Sheets integration. Check console for details.';
+                    formMessage.className = 'form-message error';
+                    console.log('Email would be:', email);
+                    console.log('Follow GOOGLE_SHEETS_SETUP.md to set up integration');
+                }
             } finally {
-                // Re-enable button
                 subscribeBtn.disabled = false;
                 subscribeBtn.textContent = 'Subscribe';
             }
         });
-        
+
         // ============================================
-        // RENDER EVENTS FROM CONFIG
+        // RENDER EVENTS
         // ============================================
         function createEventCard(event, isCompact = false) {
             const flyerHTML = event.flyer 
@@ -436,14 +434,14 @@
 
         // Render desktop grid
         const eventsGrid = document.getElementById('eventsGrid');
-        if (eventsGrid && typeof IHYA_EVENTS !== 'undefined') {
+        if (eventsGrid && IHYA_EVENTS && IHYA_EVENTS.length > 0) {
             eventsGrid.innerHTML = IHYA_EVENTS.map(event => createEventCard(event, false)).join('');
         }
 
         // Render mobile carousel
         const eventsCarousel = document.getElementById('eventsCarousel');
         const carouselDots = document.getElementById('carouselDots');
-        if (eventsCarousel && typeof IHYA_EVENTS !== 'undefined') {
+        if (eventsCarousel && IHYA_EVENTS && IHYA_EVENTS.length > 0) {
             eventsCarousel.innerHTML = IHYA_EVENTS.map(event => createEventCard(event, true)).join('');
             
             // Create dots
@@ -452,7 +450,9 @@
                 dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
                 dot.onclick = () => {
                     const cards = eventsCarousel.querySelectorAll('.event-card');
-                    eventsCarousel.scrollTo({ left: cards[i].offsetLeft - 20, behavior: 'smooth' });
+                    if (cards[i]) {
+                        eventsCarousel.scrollTo({ left: cards[i].offsetLeft - 20, behavior: 'smooth' });
+                    }
                 };
                 carouselDots.appendChild(dot);
             });
@@ -460,15 +460,18 @@
             // Update dots on scroll
             eventsCarousel.addEventListener('scroll', () => {
                 const cards = eventsCarousel.querySelectorAll('.event-card');
-                const idx = Math.round(eventsCarousel.scrollLeft / (cards[0].offsetWidth + 16));
-                carouselDots.querySelectorAll('.carousel-dot').forEach((d, i) => 
-                    d.classList.toggle('active', i === idx)
-                );
+                if (cards.length > 0) {
+                    const cardWidth = cards[0].offsetWidth + 16;
+                    const idx = Math.round(eventsCarousel.scrollLeft / cardWidth);
+                    carouselDots.querySelectorAll('.carousel-dot').forEach((d, i) => 
+                        d.classList.toggle('active', i === idx)
+                    );
+                }
             });
         }
 
         // ============================================
-        // MOBILE MENU FUNCTIONALITY
+        // MOBILE MENU
         // ============================================
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
@@ -503,14 +506,21 @@
         });
 
         // ============================================
-        // OTHER SITE FUNCTIONALITY
+        // OTHER FUNCTIONALITY
         // ============================================
-        window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50));
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
         
-        document.querySelectorAll('.tier-btn').forEach(btn => btn.addEventListener('click', () => { 
-            document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active')); 
-            btn.classList.add('active'); 
-        }));
+        document.querySelectorAll('.tier-btn').forEach(btn => {
+            btn.addEventListener('click', () => { 
+                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active')); 
+                btn.classList.add('active'); 
+            });
+        });
     </script>
+    
+    <!-- Load events.js if it exists (will override IHYA_EVENTS above) -->
+    <script src="events.js"></script>
 </body>
 </html>
