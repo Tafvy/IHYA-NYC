@@ -133,19 +133,30 @@
         .tier-btn:hover, .tier-btn.active { background: var(--ihya-white); color: var(--ihya-green); border-color: var(--ihya-white); }
         .donate-btn { background: var(--ihya-white); color: var(--ihya-green); padding: 1.25rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block; transition: all 0.3s ease; }
         .donate-btn:hover { transform: translateY(-3px); }
+        
+        /* SUBSCRIBE SECTION WITH GOOGLE FORM */
         #subscribe { background: var(--ihya-cream); }
         .subscribe-container { max-width: 600px; margin: 0 auto; text-align: center; }
         .subscribe-container h2 { font-size: 2.5rem; color: var(--ihya-green-dark); margin-bottom: 1rem; }
         .subscribe-container > p { color: var(--ihya-text-light); margin-bottom: 2rem; }
-        .subscribe-form { display: flex; gap: 1rem; max-width: 500px; margin: 0 auto; }
-        .subscribe-form input { flex: 1; padding: 1rem 1.5rem; border: 2px solid var(--ihya-sand); border-radius: 50px; font-family: inherit; font-size: 1rem; background: var(--ihya-white); }
-        .subscribe-form input:focus { outline: none; border-color: var(--ihya-green); }
-        .subscribe-form button { background: var(--ihya-green); color: var(--ihya-white); padding: 1rem 2rem; border: none; border-radius: 50px; font-family: inherit; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
-        .subscribe-form button:hover { background: var(--ihya-green-dark); }
-        .subscribe-form button:disabled { opacity: 0.7; cursor: not-allowed; }
-        .form-message { margin-top: 1rem; padding: 0.75rem; border-radius: 10px; font-size: 0.9rem; display: none; }
-        .form-message.success { background: rgba(27, 94, 65, 0.1); color: var(--ihya-green-dark); display: block; }
-        .form-message.error { background: rgba(220, 53, 69, 0.1); color: #dc3545; display: block; }
+        
+        /* Google Form Styling Container */
+        .google-form-wrapper {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            background: var(--ihya-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .google-form-wrapper iframe {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            min-height: 200px;
+        }
+        
         .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
         .social-link { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--ihya-white); border-radius: 50%; color: var(--ihya-green); text-decoration: none; transition: all 0.3s ease; }
         .social-link:hover { background: var(--ihya-green); color: var(--ihya-white); transform: translateY(-3px); }
@@ -157,7 +168,6 @@
             .mobile-menu-btn { display: flex; }
             .nav-links { position: fixed; top: 0; right: -100%; width: 80%; max-width: 350px; height: 100vh; background: var(--ihya-cream); flex-direction: column; justify-content: center; gap: 2rem; transition: right 0.3s ease; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
             .nav-links.active { right: 0; }
-            .subscribe-form { flex-direction: column; }
             .events-grid { display: none; }
             .events-carousel { display: block; padding: 0 4%; }
             .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; padding-bottom: 1rem; scrollbar-width: none; }
@@ -167,9 +177,10 @@
             .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ihya-sand); border: none; cursor: pointer; transition: all 0.3s ease; }
             .carousel-dot.active { background: var(--ihya-green); width: 24px; border-radius: 4px; }
             .social-link { width: 55px; height: 55px; }
+            .google-form-wrapper { padding: 1rem; }
         }
         @media (max-width: 480px) {
-            .subscribe-form input { font-size: 16px; }
+            .google-form-wrapper { padding: 0.5rem; }
         }
     </style>
 </head>
@@ -238,11 +249,19 @@
         <div class="subscribe-container">
             <h2>Stay Connected</h2>
             <p>Get updates on upcoming events and community news delivered to your inbox.</p>
-            <form class="subscribe-form" id="subscribeForm">
-                <input type="email" id="emailInput" name="email" placeholder="Enter your email" required>
-                <button type="submit" id="subscribeBtn">Subscribe</button>
-            </form>
-            <div id="formMessage" class="form-message"></div>
+            
+            <!-- Google Form Embedded -->
+            <div class="google-form-wrapper">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc8KVRzY6ut_OXb0lCte7_ufyD91UwGv0s3sSrz5S7u3sA3GQ/viewform?embedded=true" 
+                        width="100%" 
+                        height="350" 
+                        frameborder="0" 
+                        marginheight="0" 
+                        marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+            
             <div class="social-links">
                 <a href="https://www.instagram.com/ihyanyc/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -269,83 +288,14 @@
         <p style="margin-top:1.5rem;">© 2025 IHYA NYC. All rights reserved.</p>
     </footer>
 
-    <!-- Load events.js FIRST -->
+    <!-- Load events.js -->
     <script src="events.js"></script>
     
     <script>
         // ============================================
-        // GOOGLE SHEETS EMAIL INTEGRATION
+        // RENDER EVENTS
         // ============================================
-        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-        
-        document.getElementById('subscribeForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const emailInput = document.getElementById('emailInput');
-            const subscribeBtn = document.getElementById('subscribeBtn');
-            const formMessage = document.getElementById('formMessage');
-            const email = emailInput.value.trim();
-            
-            if (!email || !email.includes('@')) {
-                formMessage.textContent = 'Please enter a valid email address.';
-                formMessage.className = 'form-message error';
-                return;
-            }
-            
-            subscribeBtn.disabled = true;
-            subscribeBtn.textContent = 'Subscribing...';
-            formMessage.style.display = 'none';
-            
-            try {
-                if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-                    throw new Error('Google Apps Script URL not configured');
-                }
-                
-                const formData = new FormData();
-                formData.append('email', email);
-                formData.append('timestamp', new Date().toISOString());
-                
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                formMessage.textContent = "JazakAllah khair! You've been added to our list. 🤍";
-                formMessage.className = 'form-message success';
-                emailInput.value = '';
-                
-                console.log('Email submitted:', email);
-                
-            } catch (error) {
-                console.error('Subscription error:', error);
-                
-                if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-                    formMessage.textContent = "JazakAllah khair! You've been added to our list. 🤍";
-                    formMessage.className = 'form-message success';
-                    emailInput.value = '';
-                } else {
-                    formMessage.textContent = 'Please configure Google Sheets integration.';
-                    formMessage.className = 'form-message error';
-                    console.log('Email would be:', email);
-                }
-            } finally {
-                subscribeBtn.disabled = false;
-                subscribeBtn.textContent = 'Subscribe';
-            }
-        });
-
-        // ============================================
-        // RENDER EVENTS - COMPATIBLE WITH YOUR events.js
-        // ============================================
-        console.log('Loading events...');
-        console.log('IHYA_EVENTS available:', typeof IHYA_EVENTS !== 'undefined');
-        if (typeof IHYA_EVENTS !== 'undefined') {
-            console.log('Number of events:', IHYA_EVENTS.length);
-            console.log('First event:', IHYA_EVENTS[0]);
-        }
-
         function createEventCard(event, isCompact = false) {
-            // Handle flyer - check if it exists and is not null
             const flyerHTML = (event.flyer && event.flyer !== null && event.flyer !== 'null')
                 ? `<img src="flyers/${event.flyer}" alt="${event.title}" class="event-flyer" onerror="this.parentElement.innerHTML='<div class=\\'event-flyer-placeholder\\'><span class=\\'date\\'>${event.dateDisplay}</span><span class=\\'month\\'>${event.monthDisplay}</span><span class=\\'title\\'>${event.title}</span></div>';">`
                 : `<div class="event-flyer-placeholder">
@@ -380,24 +330,16 @@
             `;
         }
 
-        // Render desktop grid
         const eventsGrid = document.getElementById('eventsGrid');
         if (eventsGrid && typeof IHYA_EVENTS !== 'undefined' && IHYA_EVENTS.length > 0) {
-            console.log('Rendering events grid...');
             eventsGrid.innerHTML = IHYA_EVENTS.map(event => createEventCard(event, false)).join('');
-            console.log('Events grid rendered successfully');
-        } else {
-            console.error('Events grid not rendered. IHYA_EVENTS:', typeof IHYA_EVENTS !== 'undefined' ? IHYA_EVENTS : 'undefined');
         }
 
-        // Render mobile carousel
         const eventsCarousel = document.getElementById('eventsCarousel');
         const carouselDots = document.getElementById('carouselDots');
         if (eventsCarousel && typeof IHYA_EVENTS !== 'undefined' && IHYA_EVENTS.length > 0) {
-            console.log('Rendering mobile carousel...');
             eventsCarousel.innerHTML = IHYA_EVENTS.map(event => createEventCard(event, true)).join('');
             
-            // Create dots
             IHYA_EVENTS.forEach((_, i) => {
                 const dot = document.createElement('button');
                 dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -411,7 +353,6 @@
                 carouselDots.appendChild(dot);
             });
 
-            // Update dots on scroll
             eventsCarousel.addEventListener('scroll', () => {
                 const cards = eventsCarousel.querySelectorAll('.event-card');
                 if (cards.length > 0) {
@@ -422,7 +363,6 @@
                     );
                 }
             });
-            console.log('Mobile carousel rendered successfully');
         }
 
         // ============================================
@@ -460,9 +400,6 @@
             }
         });
 
-        // ============================================
-        // OTHER FUNCTIONALITY
-        // ============================================
         window.addEventListener('scroll', () => {
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
