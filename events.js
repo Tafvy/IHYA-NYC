@@ -32,7 +32,7 @@ const IHYA_EVENTS = [
   // ──────────────────────────────────────────
   // WEEKLY RECURRING EVENT
   // ──────────────────────────────────────────
-  {
+  //{
     id: "weekly-halaqah",
     type: "weekly",                           // "weekly" or "monthly"
     title: "Brothers' Weekly Halaqah",
@@ -50,7 +50,7 @@ const IHYA_EVENTS = [
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
     flyer: "men-of-character.jpg"
   },
-
+//
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #1
   // ──────────────────────────────────────────
