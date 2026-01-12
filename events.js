@@ -57,14 +57,7 @@ const IHYA_EVENTS = [
     id: "Ihya Quran Night",
     type: "monthly",
     title: "Ihya Quran Night",
-    description: "“O mankind! Indeed, there has come to you a warning from your Lord, a cure for what is in the hearts, a guide, and a mercy for the believers.” - (Quran 10:57)
-
-As Ramadan draws near, join us for a Quran Night focused on connecting our hearts with the Book of Allah. The program will include recitations, a discussion on the revelation and preservation of the Quran, an overview of the qira’at, and guided reflection on the verses recited.
-
-🗓️ Saturday, Jan 24th''
-⏰ Maghrib (5pm)''
-📍 Islamic Center of Jackson Heights - Masjid Abu Huraira (East Elmhurst, NY)''
-👥 Brothers & Sisters welcome",
+    description: "“O mankind! Indeed, there has come to you a warning from your Lord, a cure for what is in the hearts, a guide, and a mercy for the believers.” - (Quran 10:57) As Ramadan draws near, join us for a Quran Night focused on connecting our hearts with the Book of Allah. The program will include recitations, a discussion on the revelation and preservation of the Quran, an overview of the qira’at, and guided reflection on the verses recited. Brothers & Sisters welcome",
     
     dateDisplay: "24",
     monthDisplay: "January",
