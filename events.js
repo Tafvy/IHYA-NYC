@@ -54,21 +54,28 @@ const IHYA_EVENTS = [
   // UPCOMING MONTHLY EVENT #1
   // ──────────────────────────────────────────
   {
-    id: "dec-reflection",
+    id: "Ihya Quran Night",
     type: "monthly",
-    title: "End of Year Reflection Night",
-    description: "A special gathering to reflect on the year, share gratitudes, and set intentions for the months ahead. Light refreshments provided.",
+    title: "Ihya Quran Night",
+    description: "“O mankind! Indeed, there has come to you a warning from your Lord, a cure for what is in the hearts, a guide, and a mercy for the believers.” - (Quran 10:57)
+
+''As Ramadan draws near, join us for a Quran Night focused on connecting our hearts with the Book of Allah. The program will include recitations, a discussion on the revelation and preservation of the Quran, an overview of the qira’at, and guided reflection on the verses recited.''
+
+''🗓️ Saturday, Jan 24th''
+''⏰ Maghrib (5pm)''
+''📍 Islamic Center of Jackson Heights - Masjid Abu Huraira (East Elmhurst, NY)''
+''👥 Brothers & Sisters welcome",
     
-    dateDisplay: "28",
-    monthDisplay: "December",
+    dateDisplay: "24",
+    monthDisplay: "January",
     
-    datetime: "Saturday, December 28, 2024 | 6:00 PM - 9:00 PM",
-    location: "456 Main Hall, Brooklyn, NY 11201",
+    datetime: "Saturday, January 24, 2026 | 5:00 PM",
+    location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
     // 2. Change null to the filename: "dec-28-reflection.jpg"
-    flyer: null
+    flyer: "Ihya Quran Night.jpeg"
   },
 
   // ──────────────────────────────────────────
