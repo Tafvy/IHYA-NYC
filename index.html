@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHYA NYC — A Space for Reconnection</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="ihya-logo.png">
+    <link rel="apple-touch-icon" href="ihya-logo.png">
+    <link rel="shortcut icon" href="ihya-logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --ihya-green: #1B5E41; --ihya-green-light: #2D7A5A; --ihya-green-dark: #134332; --ihya-gold: #B8A04A; --ihya-cream: #F8F5F0; --ihya-sand: #E8E2D9; --ihya-text: #2C2C2C; --ihya-text-light: #5A5A5A; --ihya-white: #FFFFFF; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; color: var(--ihya-text); background: var(--ihya-cream); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.2; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1rem 4%; display: flex; justify-content: space-between; align-items: center; background: rgba(248, 245, 240, 0.95); backdrop-filter: blur(10px); transition: all 0.3s ease; }
+        nav.scrolled { padding: 0.6rem 4%; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+        .logo img { height: 55px; transition: all 0.3s ease; }
+        nav.scrolled .logo img { height: 45px; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--ihya-text); font-size: 0.9rem; font-weight: 500; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--ihya-green); }
+        .sustain-btn { background: var(--ihya-green) !important; color: var(--ihya-white) !important; padding: 0.75rem 1.75rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(27, 94, 65, 0.3); }
+        .sustain-btn:hover { background: var(--ihya-green-dark) !important; transform: translateY(-2px); }
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; z-index: 1001; }
+        .mobile-menu-btn span { width: 25px; height: 2px; background: var(--ihya-text); transition: all 0.3s ease; }
+        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+        .mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
+        .mobile-overlay.active { display: block; }
+        
+        /* LaunchGood Modal */
+        .donation-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 2000; align-items: center; justify-content: center; }
+        .donation-modal.active { display: flex; }
+        .donation-modal-content { position: relative; width: 90%; max-width: 1000px; height: 85vh; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .donation-modal-header { background: var(--ihya-green); color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .donation-modal-header h3 { font-size: 1.2rem; }
+        .modal-close { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.3s; }
+        .modal-close:hover { background: rgba(255,255,255,0.2); }
+        .donation-modal iframe { width: 100%; height: calc(100% - 60px); border: none; }
+        
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 8rem 4% 4rem; 
+            background: linear-gradient(rgba(19, 67, 50, 0.8), rgba(19, 67, 50, 0.6)), url('WhatsApp Image 2025-12-24 at 17.18.10.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        .hero-logo { 
+            width: 200px; 
+            margin-bottom: 2rem; 
+            animation: fadeInUp 0.8s ease forwards; 
+            filter: brightness(0) invert(1);
+        }
+        
+        .hero h1 { 
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            color: var(--ihya-white); 
+            margin-bottom: 1.5rem; 
+            animation: fadeInUp 0.8s ease 0.2s forwards; 
+            opacity: 0; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .hero p { 
+            font-size: 1.2rem; 
+            color: var(--ihya-cream); 
+            max-width: 600px; 
+            margin: 0 auto 2.5rem; 
+            animation: fadeInUp 0.8s ease 0.4s forwards; 
+            opacity: 0; 
+        }
+        
+        .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.6s forwards; opacity: 0; }
+        .btn-primary { background: var(--ihya-green); color: var(--ihya-white); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(27, 94, 65, 0.35); border: none; cursor: pointer; font-family: inherit; font-size: 1rem; }
+        .btn-primary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); transform: translateY(-2px); }
+        
+        .btn-secondary { 
+            background: transparent; 
+            color: var(--ihya-white); 
+            padding: 1rem 2.5rem; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 500; 
+            border: 2px solid var(--ihya-white); 
+            transition: all 0.3s ease; 
+        }
+        .btn-secondary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); }
+        
+        section { padding: 5rem 4%; }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
+        .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--ihya-green-dark); margin-bottom: 1rem; }
+        .section-header p { color: var(--ihya-text-light); font-size: 1.1rem; }
+        #events { background: var(--ihya-white); padding: 5rem 0; }
+        #events .section-header { padding: 0 4%; }
+        .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 0 4%; }
+        .event-card { background: var(--ihya-cream); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .event-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+        .event-flyer { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+        .event-flyer-placeholder { width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, var(--ihya-green) 0%, var(--ihya-green-light) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ihya-white); padding: 2rem; text-align: center; }
+        .event-flyer-placeholder .date { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 600; line-height: 1; }
+        .event-flyer-placeholder .month { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; }
+        .event-flyer-placeholder .title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; }
+        .event-details { padding: 1.5rem; }
+        .event-details h3 { font-size: 1.4rem; color: var(--ihya-green-dark); margin-bottom: 0.75rem; }
+        .event-details p { color: var(--ihya-text-light); font-size: 0.95rem; margin-bottom: 1rem; }
+        .event-meta { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--ihya-sand); }
+        .event-meta-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9rem; }
+        .event-meta-item svg { width: 18px; height: 18px; color: var(--ihya-green); flex-shrink: 0; }
+        .event-meta-item span { user-select: all; cursor: text; }
+        .event-tag { display: inline-block; padding: 0.25rem 0.75rem; background: rgba(184, 160, 74, 0.15); color: var(--ihya-gold); border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem; }
+        .event-tag.weekly { background: rgba(27, 94, 65, 0.1); color: var(--ihya-green); }
+        .events-carousel { display: none; }
+        #about { background: var(--ihya-sand); }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .about-card { padding: 2.5rem; background: var(--ihya-white); border-radius: 20px; transition: all 0.4s ease; }
+        .about-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .about-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .about-card h3 { font-size: 1.5rem; color: var(--ihya-green-dark); margin-bottom: 1rem; }
+        .about-card p { color: var(--ihya-text-light); }
+        
+        #sustain { background: linear-gradient(135deg, var(--ihya-green-dark) 0%, var(--ihya-green) 100%); color: var(--ihya-white); text-align: center; }
+        .sustain-content { max-width: 700px; margin: 0 auto; }
+        .sustain-content h2 { color: var(--ihya-white); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
+        .sustain-content > p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2.5rem; }
+        .donation-tiers { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .tier-btn { padding: 0.875rem 2rem; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 50px; color: var(--ihya-white); font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .tier-btn:hover, .tier-btn.active { background: var(--ihya-white); color: var(--ihya-green); border-color: var(--ihya-white); }
+        .donate-btn { background: var(--ihya-white); color: var(--ihya-green); padding: 1.25rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block; transition: all 0.3s ease; border: none; cursor: pointer; font-family: inherit; }
+        .donate-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        
+        #subscribe { background: var(--ihya-cream); }
+        .subscribe-container { max-width: 600px; margin: 0 auto; text-align: center; }
+        .subscribe-container h2 { font-size: 2.5rem; color: var(--ihya-green-dark); margin-bottom: 1rem; }
+        .subscribe-container > p { color: var(--ihya-text-light); margin-bottom: 2rem; }
+        
+        .google-form-wrapper {
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            background: var(--ihya-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .google-form-wrapper iframe {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            min-height: 200px;
+        }
+        
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
+        .social-link { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--ihya-white); border-radius: 50%; color: var(--ihya-green); text-decoration: none; transition: all 0.3s ease; }
+        .social-link:hover { background: var(--ihya-green); color: var(--ihya-white); transform: translateY(-3px); }
+        footer { background: var(--ihya-green-dark); color: var(--ihya-white); padding: 3rem 4%; text-align: center; }
+        .footer-logo-img { height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1); opacity: 0.9; }
+        footer p { opacity: 0.7; font-size: 0.9rem; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
+            .nav-links { position: fixed; top: 0; right: -100%; width: 80%; max-width: 350px; height: 100vh; background: var(--ihya-cream); flex-direction: column; justify-content: center; gap: 2rem; transition: right 0.3s ease; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
+            .nav-links.active { right: 0; }
+            .events-grid { display: none; }
+            .events-carousel { display: block; padding: 0 4%; }
+            .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; padding-bottom: 1rem; scrollbar-width: none; }
+            .carousel-container::-webkit-scrollbar { display: none; }
+            .carousel-container .event-card { flex: 0 0 90%; scroll-snap-align: center; }
+            .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
+            .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ihya-sand); border: none; cursor: pointer; transition: all 0.3s ease; }
+            .carousel-dot.active { background: var(--ihya-green); width: 24px; border-radius: 4px; }
+            .social-link { width: 55px; height: 55px; }
+            .google-form-wrapper { padding: 1rem; }
+            .donation-modal-content { width: 95%; height: 90vh; }
+        }
+        @media (max-width: 480px) {
+            .google-form-wrapper { padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- LaunchGood Donation Modal -->
+    <div class="donation-modal" id="donationModal">
+        <div class="donation-modal-content">
+            <div class="donation-modal-header">
+                <h3>Support IHYA NYC</h3>
+                <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
+            </div>
+            <iframe src="https://www.launchgood.com/v4/campaign/reviving_community_in_nyc_with_ihya" 
+                    title="LaunchGood Donation"
+                    id="donationFrame">
+            </iframe>
+        </div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="logo"><img src="ihya-logo.png" alt="IHYA NYC"></a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#events">Events</a>
+            <a href="#subscribe">Stay Connected</a>
+            <button class="sustain-btn" onclick="openDonationModal()">Sustain</button>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <img src="ihya-logo.png" alt="IHYA" class="hero-logo">
+            <h1>A Space for Reconnection</h1>
+            <p>IHYA is a collective for young professionals to reconnect — with their faith, purpose, and each other. Growing together through spiritual reflection, meaningful bonds, and shared growth.</p>
+            <div class="hero-cta">
+                <button class="btn-primary" onclick="openDonationModal()">Sustain Our Mission</button>
+                <a href="#events" class="btn-secondary">View Events</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="events">
+        <div class="section-header">
+            <h2>Upcoming Events</h2>
+            <p>Join us for gatherings that nourish the soul and strengthen our community</p>
+        </div>
+        <div class="events-grid" id="eventsGrid"></div>
+        <div class="events-carousel">
+            <div class="carousel-container" id="eventsCarousel"></div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header"><h2>Who We Are</h2><p>A refuge for the heart, where young professionals gather to nurture their faith and build lasting bonds</p></div>
+        <div class="about-grid">
+            <div class="about-card"><div class="about-icon">🤍</div><h3>A Refuge for the Heart</h3><p>In the busyness of city life, IHYA offers a sanctuary where you can pause, reflect, and reconnect with what truly matters.</p></div>
+            <div class="about-card"><div class="about-icon">🤝</div><h3>Meaningful Connections</h3><p>Through worship and fellowship, we build genuine brotherhood rooted in shared values and mutual support.</p></div>
+            <div class="about-card"><div class="about-icon">🌿</div><h3>Collective Growth</h3><p>We believe growth happens in community. Together, we study, reflect, and support one another on the path of faith.</p></div>
+        </div>
+    </section>
+
+    <section id="sustain">
+        <div class="sustain-content">
+            <h2>Sustain Our Mission</h2>
+            <p>Your support keeps IHYA running — funding our events, spaces, and programs that help brothers reconnect with faith and community.</p>
+            <div class="donation-tiers">
+                <button class="tier-btn" onclick="openDonationModal()">$25</button>
+                <button class="tier-btn" onclick="openDonationModal()">$50</button>
+                <button class="tier-btn active" onclick="openDonationModal()">$100</button>
+                <button class="tier-btn" onclick="openDonationModal()">$250</button>
+            </div>
+            <button class="donate-btn" onclick="openDonationModal()">Donate Now</button>
+            <p style="margin-top:1.5rem;font-size:0.9rem;opacity:0.8;">Monthly sustainers help us plan ahead and grow our impact</p>
+        </div>
+    </section>
+
+    <section id="subscribe">
+        <div class="subscribe-container">
+            <h2>Stay Connected</h2>
+            <p>Get updates on upcoming events and community news delivered to your inbox.</p>
+            
+            <div class="google-form-wrapper">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc8KVRzY6ut_OXb0lCte7_ufyD91UwGv0s3sSrz5S7u3sA3GQ/viewform?embedded=true" 
+                        width="100%" 
+                        height="350" 
+                        frameborder="0" 
+                        marginheight="0" 
+                        marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://www.instagram.com/ihyanyc/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@ihyanyc" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@ihyanyc" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                </a>
+                <a href="https://open.spotify.com/show/3KNN86MbX9uvL10eRMBvOu" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Spotify">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                </a>
+                <a href="https://chat.whatsapp.com/JobAfA8iQdv6kUg9UfgHrO" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <img src="ihya-logo.png" alt="IHYA NYC" class="footer-logo-img">
+        <p>A space for young professionals to reconnect with faith, purpose, and each other.</p>
+        <p style="margin-top:1.5rem;">© 2025 IHYA NYC. All rights reserved.</p>
+    </footer>
+
+    <script src="events.js"></script>
+    
+    <script>
+        // ============================================
+        // LAUNCHGOOD DONATION MODAL
+        // ============================================
+        function openDonationModal() {
+            document.getElementById('donationModal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeDonationModal() {
+            document.getElementById('donationModal').classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeDonationModal);
+        
+        // Close modal when clicking outside
+        document.getElementById('donationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDonationModal();
+            }
+        });
+
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDonationModal();
+            }
+        });
+
+        // ============================================
+        // RENDER EVENTS
+        // ============================================
+        function createEventCard(event, isCompact = false) {
+            const flyerHTML = (event.flyer && event.flyer !== null && event.flyer !== 'null')
+                ? `<img src="flyers/${event.flyer}" alt="${event.title}" class="event-flyer" onerror="this.parentElement.innerHTML='<div class=\\'event-flyer-placeholder\\'><span class=\\'date\\'>${event.dateDisplay}</span><span class=\\'month\\'>${event.monthDisplay}</span><span class=\\'title\\'>${event.title}</span></div>';">`
+                : `<div class="event-flyer-placeholder">
+                     <span class="date">${event.dateDisplay}</span>
+                     <span class="month">${event.monthDisplay}</span>
+                     <span class="title">${event.title}</span>
+                   </div>`;
+            
+            const descriptionHTML = isCompact 
+                ? `<p>${event.description.substring(0, 80)}...</p>`
+                : `<p>${event.description}</p>`;
+
+            return `
+                <div class="event-card">
+                    ${flyerHTML}
+                    <div class="event-details">
+                        <span class="event-tag ${event.type === 'weekly' ? 'weekly' : ''}">${event.type}</span>
+                        <h3>${event.title}</h3>
+                        ${descriptionHTML}
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                                <span>${event.datetime}</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <span>${event.location}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const eventsGrid = document.getElementById('eventsGrid');
+        if (eventsGrid && typeof IHYA_EVENTS !== 'undefined' && IHYA_EVENTS.length > 0) {
+            eventsGrid.innerHTML = IHYA_EVENTS.map(event => createEventCard(event, false)).join('');
+        }
+
+        const eventsCarousel = document.getElementById('eventsCarousel');
+        const carouselDots = document.getElementById('carouselDots');
+        if (eventsCarousel && typeof IHYA_EVENTS !== 'undefined' && IHYA_EVENTS.length > 0) {
+            eventsCarousel.innerHTML = IHYA_EVENTS.map(event => createEventCard(event, true)).join('');
+            
+            IHYA_EVENTS.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', `Go to event ${i + 1}`);
+                dot.onclick = () => {
+                    const cards = eventsCarousel.querySelectorAll('.event-card');
+                    if (cards[i]) {
+                        eventsCarousel.scrollTo({ left: cards[i].offsetLeft - 20, behavior: 'smooth' });
+                    }
+                };
+                carouselDots.appendChild(dot);
+            });
+
+            eventsCarousel.addEventListener('scroll', () => {
+                const cards = eventsCarousel.querySelectorAll('.event-card');
+                if (cards.length > 0) {
+                    const cardWidth = cards[0].offsetWidth + 16;
+                    const idx = Math.round(eventsCarousel.scrollLeft / cardWidth);
+                    carouselDots.querySelectorAll('.carousel-dot').forEach((d, i) => 
+                        d.classList.toggle('active', i === idx)
+                    );
+                }
+            });
+        }
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        mobileOverlay.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+        
+        document.querySelectorAll('.tier-btn').forEach(btn => {
+            btn.addEventListener('click', () => { 
+                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active')); 
+                btn.classList.add('active'); 
+            });
+        });
+    </script>
+</body>
+</html>
