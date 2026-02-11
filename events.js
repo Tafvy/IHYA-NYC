@@ -28,7 +28,7 @@
  */
 
 const IHYA_EVENTS = [
-  
+  /*
   // ──────────────────────────────────────────
   // WEEKLY RECURRING EVENT
   // ──────────────────────────────────────────
@@ -50,6 +50,7 @@ const IHYA_EVENTS = [
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
     flyer: "null to use placeholder"
   },
+  */
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #1
   // ──────────────────────────────────────────
