@@ -70,7 +70,7 @@ const IHYA_EVENTS = [
     // 2. Change null to the filename: "dec-28-reflection.jpg"
     flyer: "Ihya Quran Night.jpg"
   },
-
+/*
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #2
   // ──────────────────────────────────────────
@@ -88,7 +88,7 @@ const IHYA_EVENTS = [
     
     flyer: "dec-28-reflection.jpg"
   },
-
+*/
   // ──────────────────────────────────────────
   // ADD NEW EVENTS BELOW (copy this template)
   // ──────────────────────────────────────────
