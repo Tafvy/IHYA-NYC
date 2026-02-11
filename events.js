@@ -36,7 +36,7 @@ const IHYA_EVENTS = [
     id: "weekly-halaqah",
     type: "weekly",                           // "weekly" or "monthly"
     title: "Brothers' Weekly Halaqah",
-    description: "Join us for our first halaqa of the new year! Our esteemed speaker Mufti Tofael Nuruddin will be joining us as we reflect on the lives and qualities of the Sahaba and righteous men who shaped this Ummah رَضِيَ اللَّهُ عَنْهُمْ",
+    description: " ",
     
     // Date display on flyer placeholder (if no flyer image)
     dateDisplay: "Every",
@@ -48,7 +48,7 @@ const IHYA_EVENTS = [
     
     // Flyer image - set to null to use placeholder, or add filename
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
-    flyer: "men-of-character.jpg"
+    flyer: "null to use placeholder"
   },
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #1
@@ -56,19 +56,19 @@ const IHYA_EVENTS = [
   {
     id: "Ihya Quran Night",
     type: "monthly",
-    title: "Ihya Quran Night",
-    description: "“O mankind! Indeed, there has come to you a warning from your Lord, a cure for what is in the hearts, a guide, and a mercy for the believers.” - (Quran 10:57) As Ramadan draws near, join us for a Quran Night focused on connecting our hearts with the Book of Allah. The program will include recitations, a discussion on the revelation and preservation of the Quran, an overview of the qira’at, and guided reflection on the verses recited. Brothers & Sisters welcome",
+    title: "Dua The Essence of Worship",
+    description: "Anas ibn Malik reported that the Prophet ﷺ said, “Dua (supplication) is the essence of worship.” (Sunan al-Tirmidhi) As we head into Ramadan, we strive to maximize all of our acts of worship—salah, sawm, zakat—but one act that is often overlooked is dua, one of the greatest ways to draw nearer to Allah and strengthen our connection with our Creator. Join us with our beloved speaker, Shaykh Ismail Bowers, as we learn how to perfect the etiquette of dua and strengthen our connection with The One we ask from. 🤲✨",
     
-    dateDisplay: "24",
-    monthDisplay: "January",
+    dateDisplay: "16",
+    monthDisplay: "February",
     
-    datetime: "Saturday, January 24, 2026 | 5:00 PM",
-    location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
+    datetime: "Sunday, February 16, 2026 | 5:30 PM",
+    location: "Masjid Al-Hikmah 48-01 31st Ave, Astoria, NY 11103",
     
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
     // 2. Change null to the filename: "dec-28-reflection.jpg"
-    flyer: "Ihya Quran Night.jpg"
+    flyer: "Dua The Essence of Worship.jpeg"
   },
 /*
   // ──────────────────────────────────────────
