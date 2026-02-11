@@ -60,10 +60,10 @@ const IHYA_EVENTS = [
     title: "Dua The Essence of Worship",
     description: "Anas ibn Malik reported that the Prophet ﷺ said, “Dua (supplication) is the essence of worship.” (Sunan al-Tirmidhi) As we head into Ramadan, we strive to maximize all of our acts of worship—salah, sawm, zakat—but one act that is often overlooked is dua, one of the greatest ways to draw nearer to Allah and strengthen our connection with our Creator. Join us with our beloved speaker, Shaykh Ismail Bowers, as we learn how to perfect the etiquette of dua and strengthen our connection with The One we ask from. 🤲✨",
     
-    dateDisplay: "16",
+    dateDisplay: "15",
     monthDisplay: "February",
     
-    datetime: "Sunday, February 16, 2026 | 5:30 PM",
+    datetime: "Sunday, February 15, 2026 | 5:30 PM",
     location: "Masjid Al-Hikmah 48-01 31st Ave, Astoria, NY 11103",
     
     // To add a flyer:
