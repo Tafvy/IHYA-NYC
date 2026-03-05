@@ -1,0 +1,18 @@
+{
+  "events": [
+    {
+      "id": "evt_1772745787795",
+      "title": "testing ",
+      "type": "halaqa",
+      "date": "2026-03-05",
+      "time": "16:22",
+      "location": "testing ",
+      "description": "testing",
+      "speaker": "",
+      "registrationLink": "",
+      "featured": false,
+      "flyer": "images/flyers/halaqa-20260305-1772745787795.jpg"
+    }
+  ],
+  "lastUpdated": "2026-03-05T21:23:09.195Z"
+}
