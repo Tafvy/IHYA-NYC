@@ -3,7 +3,7 @@
 
 // Configuration
 const CONFIG = {
-    passwordHash: 'f8c3bf62a9aa3e6fc1619c250e48abe7519373d3edf41be62eb5dc45199af2ef', // SHA-256 of 'ihya26'
+    passwordHash: '460b33920fa4238f8bc78abbe86cc61c2c404567cc3a13887a6c3a9be81eab23', // SHA-256 of 'ihya26'
     sessionDuration: 3600000, // 1 hour
     maxLoginAttempts: 5,
     apiEndpoint: '/.netlify/functions/update-events' // Netlify function endpoint
