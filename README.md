@@ -6,7 +6,7 @@ A simple, clean website for IHYA NYC — a space for young professionals to reco
 
 ---
 
-## 📁 Repository Structure
+## 📁 Repository Structure 
 
 ```
 ihya-nyc/
