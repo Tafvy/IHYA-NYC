@@ -1,17 +1,12 @@
-// IHYA NYC Admin System
-// GitHub Repository: Tafvy/IHYA-NYC
+// IHYA NYC Admin System - Netlify Version
+// Fully automated - admins never see GitHub!
 
 // Configuration
 const CONFIG = {
-    githubOwner: 'Tafvy',
-    githubRepo: 'IHYA-NYC',
-    githubBranch: 'main',
-    // GitHub Personal Access Token (will need to be created)
-    // IMPORTANT: Replace this with your actual token
-    githubToken: 'GITHUB_TOKEN_PLACEHOLDER',
     passwordHash: 'f8c3bf62a9aa3e6fc1619c250e48abe7519373d3edf41be62eb5dc45199af2ef', // SHA-256 of 'ihya26'
     sessionDuration: 3600000, // 1 hour
-    maxLoginAttempts: 5
+    maxLoginAttempts: 5,
+    apiEndpoint: '/.netlify/functions/update-events' // Netlify function endpoint
 };
 
 // State
@@ -36,31 +31,25 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('passwordInput').value;
     const errorEl = document.getElementById('loginError');
     
-    // Check login attempts
     if (loginAttempts >= CONFIG.maxLoginAttempts) {
         errorEl.textContent = 'Too many failed attempts. Please refresh and try again.';
         return;
     }
     
-    // Hash and verify password
     const hashedInput = await hashPassword(password);
     
     if (hashedInput === CONFIG.passwordHash) {
-        // Success - create session
         const session = {
             authenticated: true,
             timestamp: Date.now()
         };
         sessionStorage.setItem('ihya_admin_session', JSON.stringify(session));
         
-        // Show dashboard
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminDashboard').style.display = 'block';
         
-        // Load events
         loadEvents();
     } else {
-        // Failed attempt
         loginAttempts++;
         errorEl.textContent = `Incorrect password. ${CONFIG.maxLoginAttempts - loginAttempts} attempts remaining.`;
         document.getElementById('passwordInput').value = '';
@@ -72,14 +61,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 });
 
-// Check for existing session
 function checkSession() {
     const session = sessionStorage.getItem('ihya_admin_session');
     if (session) {
         const sessionData = JSON.parse(session);
         const now = Date.now();
         
-        // Check if session is still valid
         if (sessionData.authenticated && (now - sessionData.timestamp) < CONFIG.sessionDuration) {
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('adminDashboard').style.display = 'block';
@@ -95,69 +82,28 @@ function logout() {
     location.reload();
 }
 
-// ==================== GITHUB API ====================
+// ==================== API CALLS ====================
 
-async function githubRequest(endpoint, method = 'GET', data = null) {
-    const url = `https://api.github.com/repos/${CONFIG.githubOwner}/${CONFIG.githubRepo}/${endpoint}`;
-    
-    const options = {
-        method,
+async function callNetlifyFunction(action, eventData, eventId = null, flyerData = null) {
+    const response = await fetch(CONFIG.apiEndpoint, {
+        method: 'POST',
         headers: {
-            'Authorization': `token ${CONFIG.githubToken}`,
-            'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json'
-        }
-    };
-    
-    if (data && method !== 'GET') {
-        options.body = JSON.stringify(data);
-    }
-    
-    const response = await fetch(url, options);
+        },
+        body: JSON.stringify({
+            action,
+            eventData,
+            eventId,
+            flyerData
+        })
+    });
     
     if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || 'GitHub API request failed');
+        throw new Error(error.message || 'API request failed');
     }
     
     return response.json();
-}
-
-async function getFileContent(path) {
-    try {
-        const data = await githubRequest(`contents/${path}?ref=${CONFIG.githubBranch}`);
-        const content = atob(data.content);
-        return { content, sha: data.sha };
-    } catch (error) {
-        if (error.message.includes('404')) {
-            return { content: null, sha: null };
-        }
-        throw error;
-    }
-}
-
-async function updateFile(path, content, message, sha = null) {
-    const data = {
-        message,
-        content: btoa(unescape(encodeURIComponent(content))),
-        branch: CONFIG.githubBranch
-    };
-    
-    if (sha) {
-        data.sha = sha;
-    }
-    
-    return await githubRequest(`contents/${path}`, 'PUT', data);
-}
-
-async function uploadImage(path, base64Data, message) {
-    const data = {
-        message,
-        content: base64Data.split(',')[1], // Remove data:image/...;base64, prefix
-        branch: CONFIG.githubBranch
-    };
-    
-    return await githubRequest(`contents/${path}`, 'PUT', data);
 }
 
 // ==================== EVENTS MANAGEMENT ====================
@@ -166,10 +112,11 @@ async function loadEvents() {
     try {
         showLoading(true);
         
-        const { content } = await getFileContent('data/events.json');
+        // Fetch events.json from your GitHub repo (public read)
+        const response = await fetch('https://raw.githubusercontent.com/Tafvy/IHYA-NYC/main/data/events.json');
         
-        if (content) {
-            const data = JSON.parse(content);
+        if (response.ok) {
+            const data = await response.json();
             currentEvents = data.events || [];
         } else {
             currentEvents = [];
@@ -180,7 +127,7 @@ async function loadEvents() {
         
     } catch (error) {
         console.error('Error loading events:', error);
-        showToast('Failed to load events: ' + error.message, 'error');
+        showToast('Failed to load events. Using empty state.', 'error');
         currentEvents = [];
         displayEvents();
     } finally {
@@ -197,7 +144,7 @@ function displayEvents() {
     
     const past = currentEvents.filter(e => new Date(e.date) < now)
         .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 10); // Show only last 10 past events
+        .slice(0, 10);
     
     displayEventsList('eventsList', upcoming, 'No upcoming events scheduled.');
     displayEventsList('pastEventsList', past, 'No past events.');
@@ -218,7 +165,7 @@ function displayEventsList(containerId, events, emptyMessage) {
     
     container.innerHTML = events.map(event => `
         <div class="event-card">
-            <img src="${event.flyer}" alt="${event.title}" class="event-flyer-thumb">
+            <img src="${event.flyer}" alt="${event.title}" class="event-flyer-thumb" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'120\\' height=\\'120\\'%3E%3Crect fill=\\'%23E8E2D9\\' width=\\'120\\' height=\\'120\\'/%3E%3C/svg%3E'">
             <div class="event-info">
                 <h3>${event.title}</h3>
                 <div class="event-meta">
@@ -257,7 +204,6 @@ function showAddEvent() {
     document.getElementById('eventId').value = '';
     resetFlyerUpload();
     
-    // Set default date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('eventDate').value = today;
     
@@ -271,7 +217,6 @@ function editEvent(eventId) {
     editingEventId = eventId;
     document.getElementById('formTitle').textContent = 'Edit Event';
     
-    // Populate form
     document.getElementById('eventId').value = event.id;
     document.getElementById('eventTitle').value = event.title;
     document.getElementById('eventType').value = event.type;
@@ -283,7 +228,6 @@ function editEvent(eventId) {
     document.getElementById('eventRegistration').value = event.registrationLink || '';
     document.getElementById('featuredEvent').checked = event.featured || false;
     
-    // Show existing flyer
     if (event.flyer) {
         showFlyerPreview(event.flyer);
     }
@@ -299,14 +243,13 @@ async function deleteEvent(eventId) {
     try {
         showLoading(true);
         
-        // Remove event from array
-        currentEvents = currentEvents.filter(e => e.id !== eventId);
-        
-        // Save to GitHub
-        await saveEventsToGitHub();
+        await callNetlifyFunction('delete', null, eventId);
         
         showToast('Event deleted successfully!', 'success');
-        loadEvents();
+        
+        setTimeout(() => {
+            loadEvents();
+        }, 1000);
         
     } catch (error) {
         console.error('Error deleting event:', error);
@@ -331,7 +274,6 @@ function setupFlyerUpload() {
     
     fileInput.addEventListener('change', handleFlyerSelect);
     
-    // Drag and drop
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = 'var(--ihya-green)';
@@ -360,7 +302,6 @@ function handleFlyerSelect(e) {
 }
 
 function processFlyer(file) {
-    // Check file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
         showToast('Image too large. Maximum size is 5MB.', 'error');
         return;
@@ -408,7 +349,6 @@ document.getElementById('eventForm').addEventListener('submit', async (e) => {
         
         showLoading(true);
         
-        // Get form data
         const formData = {
             id: editingEventId || `evt_${Date.now()}`,
             title: document.getElementById('eventTitle').value,
@@ -423,43 +363,30 @@ document.getElementById('eventForm').addEventListener('submit', async (e) => {
             flyer: ''
         };
         
-        // Upload flyer if new one selected
+        // Handle flyer
+        let flyerDataToSend = null;
         if (currentFlyerData) {
-            const flyerFileName = `${formData.type}-${formData.date.replace(/-/g, '')}.jpg`;
-            const flyerPath = `images/flyers/${flyerFileName}`;
-            
-            await uploadImage(flyerPath, currentFlyerData, `Upload flyer for ${formData.title}`);
-            formData.flyer = flyerPath;
+            const flyerFileName = `${formData.type}-${formData.date.replace(/-/g, '')}-${Date.now()}.jpg`;
+            formData.flyer = `images/flyers/${flyerFileName}`;
+            flyerDataToSend = currentFlyerData;
         } else if (editingEventId) {
-            // Keep existing flyer
             const existingEvent = currentEvents.find(e => e.id === editingEventId);
             formData.flyer = existingEvent.flyer;
         } else {
             showToast('Please upload a flyer for the event.', 'error');
-            return;
+            throw new Error('No flyer uploaded');
         }
         
-        // Add or update event
-        if (editingEventId) {
-            const index = currentEvents.findIndex(e => e.id === editingEventId);
-            currentEvents[index] = formData;
-        } else {
-            currentEvents.push(formData);
-        }
-        
-        // Sort by date
-        currentEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-        
-        // Save to GitHub
-        await saveEventsToGitHub();
+        // Call Netlify function
+        const action = editingEventId ? 'update' : 'add';
+        await callNetlifyFunction(action, formData, editingEventId, flyerDataToSend);
         
         showToast(editingEventId ? 'Event updated successfully!' : 'Event published successfully!', 'success');
         
-        // Reset and go back to dashboard
         setTimeout(() => {
             showDashboard();
             loadEvents();
-        }, 1000);
+        }, 1500);
         
     } catch (error) {
         console.error('Error saving event:', error);
@@ -472,24 +399,6 @@ document.getElementById('eventForm').addEventListener('submit', async (e) => {
         publishBtn.querySelector('.btn-loading').style.display = 'none';
     }
 });
-
-async function saveEventsToGitHub() {
-    const { sha } = await getFileContent('data/events.json');
-    
-    const eventsData = {
-        events: currentEvents,
-        lastUpdated: new Date().toISOString()
-    };
-    
-    const content = JSON.stringify(eventsData, null, 2);
-    
-    await updateFile(
-        'data/events.json',
-        content,
-        'Update events data',
-        sha
-    );
-}
 
 // ==================== PREVIEW ====================
 
@@ -598,7 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFlyerUpload();
 });
 
-// Close modal when clicking outside
 document.getElementById('previewModal')?.addEventListener('click', (e) => {
     if (e.target.id === 'previewModal') {
         closePreview();
