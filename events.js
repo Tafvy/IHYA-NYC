@@ -58,10 +58,11 @@ const IHYA_EVENTS = [
     id: "Ihya Quran Night",
     type: "monthly",
     title: "Dua The Essence of Worship",
-    description: "Anas ibn Malik reported that the Prophet ﷺ said, “Dua (supplication) is the essence of worship.” (Sunan al-Tirmidhi) As we head into Ramadan, we strive to maximize all of our acts of worship—salah, sawm, zakat—but one act that is often overlooked is dua, one of the greatest ways to draw nearer to Allah and strengthen our connection with our Creator. Join us with our beloved speaker, Shaykh Ismail Bowers, as we learn how to perfect the etiquette of dua and strengthen our connection with The One we ask from. 🤲✨",
+    description: "Futuwwah: Noble Character
+In the Company of the Quran - An Explanation of Surah al-Anbiya",
     
-    dateDisplay: "15",
-    monthDisplay: "February",
+    dateDisplay: "Tuesday, April 7th",
+    monthDisplay: "March",
     
     datetime: "Sunday, February 15, 2026 | 5:30 PM",
     location: "Masjid Al-Hikmah 48-01 31st Ave, Astoria, NY 11103",
@@ -69,7 +70,7 @@ const IHYA_EVENTS = [
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
     // 2. Change null to the filename: "dec-28-reflection.jpg"
-    flyer: "Dua The Essence of Worship.jpeg"
+    flyer: "8d15fb80-b956-48f3-9d05-d1ca75639ef8.jpeg"
   },
 /*
   // ──────────────────────────────────────────
