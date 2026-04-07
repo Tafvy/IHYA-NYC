@@ -63,7 +63,7 @@ const IHYA_EVENTS = [
     dateDisplay: "Tuesday, April 7th",
     monthDisplay: "March",
     
-    datetime: "Sunday, February 15, 2026 | 5:30 PM",
+    datetime: "Tuesday, April 7th, 2026 | 7:00 PM",
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     // To add a flyer:
