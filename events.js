@@ -58,14 +58,13 @@ const IHYA_EVENTS = [
     id: "Ihya Quran Night",
     type: "monthly",
     title: "Dua The Essence of Worship",
-    description: "Futuwwah: Noble Character
-In the Company of the Quran - An Explanation of Surah al-Anbiya",
+    description: "Futuwwah: Noble Character In the Company of the Quran - An Explanation of Surah al-Anbiya",
     
     dateDisplay: "Tuesday, April 7th",
     monthDisplay: "March",
     
     datetime: "Sunday, February 15, 2026 | 5:30 PM",
-    location: "Masjid Al-Hikmah 48-01 31st Ave, Astoria, NY 11103",
+    location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
