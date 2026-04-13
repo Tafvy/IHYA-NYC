@@ -52,24 +52,24 @@ const IHYA_EVENTS = [
   },
   */
   // ──────────────────────────────────────────
-  // UPCOMING MONTHLY EVENT #1
+  // UPCOMING Weekly EVENT #1
   // ──────────────────────────────────────────
   {
     id: "Ihya Quran Night",
-    type: "monthly",
-    title: "Dua The Essence of Worship",
-    description: "Futuwwah: Noble Character In the Company of the Quran - An Explanation of Surah al-Anbiya",
+    type: "Weekly",
+    title: "Stories of the Prophets",
+    description: "Weekly halaqas focused on instilling Prophetic character based on the texts:Futuwwah: Noble Character In the Company of the Quran - An Explanation of Surah al-Anbiya",
     
-    dateDisplay: "Tuesday, April 7th",
-    monthDisplay: "March",
+    dateDisplay: "",
+    monthDisplay: "",
     
-    datetime: "Tuesday, April 7th, 2026 | 7:00 PM",
+    datetime: "Tuesdays at 7:00 PM",
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
     // 2. Change null to the filename: "dec-28-reflection.jpg"
-    flyer: "8d15fb80-b956-48f3-9d05-d1ca75639ef8.jpeg"
+    flyer: "flyers/07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
   },
 /*
   // ──────────────────────────────────────────
