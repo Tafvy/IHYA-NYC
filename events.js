@@ -69,7 +69,7 @@ const IHYA_EVENTS = [
     // To add a flyer:
     // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
     // 2. Change null to the filename: "dec-28-reflection.jpg"
-    flyer: "flyers/07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
+    flyer: "07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
   },
 /*
   // ──────────────────────────────────────────
