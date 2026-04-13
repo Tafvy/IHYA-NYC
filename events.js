@@ -60,8 +60,8 @@ const IHYA_EVENTS = [
     title: "Stories of the Prophets",
     description: "Weekly halaqas focused on instilling Prophetic character based on the texts:Futuwwah: Noble Character In the Company of the Quran - An Explanation of Surah al-Anbiya",
     
-    dateDisplay: "",
-    monthDisplay: "",
+    dateDisplay: "Tuesdays at 7:00 PM",
+    monthDisplay: "Weekly",
     
     datetime: "Tuesdays at 7:00 PM",
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
