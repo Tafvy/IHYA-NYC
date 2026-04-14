@@ -76,16 +76,16 @@ const IHYA_EVENTS = [
   // UPCOMING MONTHLY EVENT #2
   // ──────────────────────────────────────────
   {
-    id: "jan-kickoff",
+    id: "Sisters Tafsir: Surah Ad Duhaa,
     type: "monthly",
-    title: "New Year Kickoff Gathering",
-    description: "Start 2025 with purpose. Join us for an evening of goal-setting, spiritual renewal, and meaningful conversations with the brothers.",
+    title: "Sisters Tafsir: Surah Ad Duhaa",
+    description: "Sisters Tafsir: Surah Ad Duhaa with Shaykha Shumsun Nahar",
     
-    dateDisplay: "11",
-    monthDisplay: "January",
+    dateDisplay: "Thursday, April 16, 2026",
+    monthDisplay: "April",
     
-    datetime: "Saturday, January 11, 2025 | 5:00 PM - 8:00 PM",
-    location: "789 Event Space, Manhattan, NY 10016",
+    datetime: "Thursday, April 16, 2026 | 6:30 PM",
+    location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     flyer: "dec-28-reflection.jpg"
   },
