@@ -87,7 +87,7 @@ const IHYA_EVENTS = [
     datetime: "Thursday, April 16, 2026 | 6:30 PM",
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
-    flyer: "dec-28-reflection.jpg"
+    flyer: "cef3c89f-256b-4e86-b8a3-7a2aa7facaf9.jpeg"
   },
 */
   // ──────────────────────────────────────────
