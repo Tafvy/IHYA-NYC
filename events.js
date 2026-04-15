@@ -28,34 +28,29 @@
  */
 
 const IHYA_EVENTS = [
+  // ──────────────────────────────────────────
+  // WEEKLY RECURRING EVENT (COMMENTED OUT - Remove /* and */ to activate)
+  // ──────────────────────────────────────────
   /*
-  // ──────────────────────────────────────────
-  // WEEKLY RECURRING EVENT
-  // ──────────────────────────────────────────
   {
     id: "weekly-halaqah",
-    type: "weekly",                           // "weekly" or "monthly"
+    type: "weekly",
     title: "Brothers' Weekly Halaqah",
     description: " ",
     
-    // Date display on flyer placeholder (if no flyer image)
     dateDisplay: "Every",
     monthDisplay: "Thursday",
     
-    // Event details (these appear below the flyer - users can copy/paste)
     datetime: "Every Thursday, 7:30 PM - 9:00 PM",
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
-    // Flyer image - set to null to use placeholder, or add filename
-    // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
-    flyer: "null to use placeholder"
+    flyer: null
   },
- /*
+  */
 
   // ──────────────────────────────────────────
   // UPCOMING Weekly EVENT #1
   // ──────────────────────────────────────────
-*/
   {
     id: "Ihya Quran Night",
     type: "Weekly",
@@ -68,17 +63,14 @@ const IHYA_EVENTS = [
     datetime: "Tuesdays at 7:00 PM",
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
-    // To add a flyer:
-    // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
-    // 2. Change null to the filename: "dec-28-reflection.jpg"
     flyer: "07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
   },
 
   // ──────────────────────────────────────────
-  // UPCOMING MONTHLY EVENT #2
-  // ──────────────────────────────────────────  
-{
-    id: "Sisters Tafsir: Surah Ad Duhaa,
+  // UPCOMING EVENT #2
+  // ──────────────────────────────────────────
+  {
+    id: "Sisters Tafsir: Surah Ad Duhaa",   // Fixed: Added missing closing quote
     type: "Weekly",
     title: "Sisters Tafsir: Surah Ad Duhaa",
     description: "Sisters Tafsir: Surah Ad Duhaa with Shaykha Shumsun Nahar",
@@ -90,13 +82,13 @@ const IHYA_EVENTS = [
     location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
     
     flyer: "cef3c89f-256b-4e86-b8a3-7a2aa7facaf9.jpeg"
-  },
-    /*
+  }
+
   // ──────────────────────────────────────────
   // ADD NEW EVENTS BELOW (copy this template)
   // ──────────────────────────────────────────
   /*
-  {
+  ,{
     id: "unique-event-id",
     type: "monthly",
     title: "Event Title Here",
@@ -108,8 +100,8 @@ const IHYA_EVENTS = [
     datetime: "Saturday, February 15, 2025 | 6:00 PM - 9:00 PM",
     location: "Full Address Here, City, State ZIP",
     
-    flyer: "feb-15-event.jpg"  // or null for placeholder
-  },
+    flyer: "feb-15-event.jpg"
+  }
   */
 
 ];
