@@ -73,12 +73,10 @@ const IHYA_EVENTS = [
     // 2. Change null to the filename: "dec-28-reflection.jpg"
     flyer: "07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
   },
-*/
 
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #2
-  // ──────────────────────────────────────────
-*/  
+  // ──────────────────────────────────────────  
 {
     id: "Sisters Tafsir: Surah Ad Duhaa,
     type: "Weekly",
@@ -93,7 +91,7 @@ const IHYA_EVENTS = [
     
     flyer: "cef3c89f-256b-4e86-b8a3-7a2aa7facaf9.jpeg"
   },
-*/
+    /*
   // ──────────────────────────────────────────
   // ADD NEW EVENTS BELOW (copy this template)
   // ──────────────────────────────────────────
