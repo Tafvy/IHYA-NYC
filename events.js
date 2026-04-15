@@ -50,6 +50,7 @@ const IHYA_EVENTS = [
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
     flyer: "null to use placeholder"
   },
+ /*
 */
   // ──────────────────────────────────────────
   // UPCOMING Weekly EVENT #1
