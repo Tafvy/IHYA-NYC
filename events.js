@@ -51,10 +51,11 @@ const IHYA_EVENTS = [
     flyer: "null to use placeholder"
   },
  /*
-*/
+
   // ──────────────────────────────────────────
   // UPCOMING Weekly EVENT #1
   // ──────────────────────────────────────────
+*/
   {
     id: "Ihya Quran Night",
     type: "Weekly",
@@ -73,11 +74,12 @@ const IHYA_EVENTS = [
     flyer: "07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
   },
 */
-*/
+
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #2
   // ──────────────────────────────────────────
-  {
+*/  
+{
     id: "Sisters Tafsir: Surah Ad Duhaa,
     type: "Weekly",
     title: "Sisters Tafsir: Surah Ad Duhaa",
