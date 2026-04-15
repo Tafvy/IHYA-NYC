@@ -50,7 +50,7 @@ const IHYA_EVENTS = [
     // Example: "weekly-halaqah.jpg" (file must be in /flyers folder)
     flyer: "null to use placeholder"
   },
-  */
+*/
   // ──────────────────────────────────────────
   // UPCOMING Weekly EVENT #1
   // ──────────────────────────────────────────
@@ -71,7 +71,8 @@ const IHYA_EVENTS = [
     // 2. Change null to the filename: "dec-28-reflection.jpg"
     flyer: "07ab7cd8-9efc-4b37-aa98-057a94a4ee4e.jpeg"
   },
-
+*/
+*/
   // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #2
   // ──────────────────────────────────────────
