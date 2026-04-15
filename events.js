@@ -73,6 +73,27 @@ const IHYA_EVENTS = [
   },
 /*
   // ──────────────────────────────────────────
+  // UPCOMING Weekly EVENT #1.5
+  // ──────────────────────────────────────────
+  {
+    id: "Sisters Tafsir: Surah Ad Duhaa",
+    type: "Weekly",
+    title: "Sisters Tafsir: Surah Ad Duhaa",
+    description: "Sisters Tafsir: Surah Ad Duhaa with Shaykha Shumsun Nahar",
+    
+    dateDisplay: "Thursday, April 16, 2026",
+    monthDisplay: "Weekly",
+    
+    datetime: "Thursday, April 16, 2026",
+    location: "Masjid Baitul Mukarram 22-21 33rd St, Astoria, NY 11105",
+    
+    // To add a flyer:
+    // 1. Upload image to /flyers folder (e.g., "dec-28-reflection.jpg")
+    // 2. Change null to the filename: "dec-28-reflection.jpg"
+    flyer: "cef3c89f-256b-4e86-b8a3-7a2aa7facaf9.jpeg"
+  },
+/*
+  // ──────────────────────────────────────────
   // UPCOMING MONTHLY EVENT #2
   // ──────────────────────────────────────────
   {
