@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IHYA NYC — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green:       #1B5E41;
+      --green-dark:  #134332;
+      --green-light: #2a7a56;
+      --gold:        #B8A04A;
+      --gold-light:  #d4bc6a;
+      --cream:       #F8F5F0;
+      --cream-dark:  #ede9e2;
+      --text:        #1a1a1a;
+      --text-muted:  #6b6b6b;
+      --white:       #ffffff;
+      --danger:      #c0392b;
+      --danger-bg:   #fdf0ef;
+      --success:     #1B5E41;
+      --success-bg:  #edf7f2;
+      --shadow-sm:   0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md:   0 4px 16px rgba(0,0,0,0.10);
+      --shadow-lg:   0 8px 32px rgba(0,0,0,0.13);
+      --radius:      10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── LOGIN ─────────────────────────────── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, var(--green-dark) 0%, var(--green) 60%, var(--green-light) 100%);
+      padding: 2rem;
+    }
+
+    .login-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+
+    .login-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.5rem;
+      display: block;
+    }
+
+    .login-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--green-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .login-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .login-card input[type="password"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--cream);
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .login-card input[type="password"]:focus {
+      outline: none;
+      border-color: var(--green);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-login:hover { background: var(--green-dark); }
+
+    .login-error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    /* ── TOP BAR ────────────────────────────── */
+    #admin-app { display: none; }
+
+    .topbar {
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+    }
+
+    .topbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--gold-light);
+    }
+
+    .topbar-brand span { color: var(--white); font-weight: 400; }
+
+    .btn-logout {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── MAIN LAYOUT ───────────────────────── */
+    .admin-main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* ── SECTION HEADER ────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--green-dark);
+    }
+
+    .section-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── BUTTONS ────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.3rem;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--green-dark); }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--green);
+      border: 1.5px solid var(--green);
+    }
+    .btn-secondary:hover { background: var(--cream); }
+
+    .btn-danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid #f5c6c2;
+    }
+    .btn-danger:hover { background: #fbe0de; }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--white);
+    }
+    .btn-gold:hover { background: #a08838; }
+
+    .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.82rem; }
+
+    /* ── TOAST NOTIFICATION ─────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      z-index: 9999;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      max-width: 340px;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { background: var(--success-bg); color: var(--success); border: 1px solid #b6deca; }
+    #toast.error   { background: var(--danger-bg);  color: var(--danger);  border: 1px solid #f5c6c2; }
+
+    /* ── EVENT FORM CARD ────────────────────── */
+    .form-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+      border: 1px solid var(--cream-dark);
+    }
+
+    .form-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--green-dark);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    input[type="url"],
+    select,
+    textarea {
+      padding: 0.75rem 0.9rem;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--cream);
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--green);
+      background: var(--white);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    /* Flyer upload */
+    .flyer-upload-area {
+      border: 2px dashed var(--cream-dark);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .flyer-upload-area:hover, .flyer-upload-area.dragover {
+      border-color: var(--green);
+      background: #f0f7f4;
+    }
+
+    .flyer-upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .flyer-preview {
+      max-height: 160px;
+      border-radius: 8px;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .upload-label { color: var(--text-muted); font-size: 0.88rem; }
+    .upload-label strong { color: var(--green); }
+
+    /* Form actions */
+    .form-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+
+    /* ── EVENT LIST ─────────────────────────── */
+    .events-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .event-card {
+      background: var(--white);
+      border: 1px solid var(--cream-dark);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      transition: box-shadow 0.18s;
+    }
+
+    .event-card:hover { box-shadow: var(--shadow-md); }
+
+    .event-card-flyer {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--cream-dark);
+    }
+
+    .event-card-flyer-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      background: var(--cream-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .event-card-info { min-width: 0; }
+
+    .event-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--green-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event-card-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .event-card-type {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(27,94,65,0.1);
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 0.35rem;
+    }
+
+    .event-card-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+    /* ── EMPTY STATE ────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-muted);
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--cream-dark);
+    }
+
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .empty-state p { font-size: 0.95rem; }
+
+    /* ── TABS ───────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--cream-dark);
+    }
+
+    .tab-btn {
+      padding: 0.65rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .tab-btn.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── LOADING ────────────────────────────── */
+    .spinner {
+      display: inline-block;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 0.4rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── SETUP BANNER ───────────────────────── */
+    .setup-banner {
+      background: linear-gradient(135deg, #fff8e1, #fffde7);
+      border: 1px solid #f0d060;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .setup-banner .icon { font-size: 1.5rem; flex-shrink: 0; }
+    .setup-banner h4 { font-size: 0.95rem; font-weight: 600; color: #7a5c00; margin-bottom: 0.25rem; }
+    .setup-banner p  { font-size: 0.85rem; color: #8a6e00; line-height: 1.5; }
+    .setup-banner code {
+      background: rgba(0,0,0,0.07);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-family: monospace;
+    }
+
+    /* ── CONFIG OVERLAY ─────────────────────── */
+    #config-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #config-overlay.show { display: flex; }
+
+    .config-modal {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .config-modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--green-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .config-modal p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .config-modal .form-group { margin-bottom: 1rem; }
+    .config-modal label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.35rem; }
+    .config-modal input { width: 100%; padding: 0.75rem; border: 1.5px solid var(--cream-dark); border-radius: 8px; font-family: monospace; font-size: 0.85rem; }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .event-card { grid-template-columns: 1fr; }
+      .event-card-flyer, .event-card-flyer-placeholder { display: none; }
+      .topbar { padding: 0 1rem; }
+      .admin-main { padding: 1.5rem 1rem; }
+      .form-card { padding: 1.25rem; }
+      .form-actions { flex-direction: column; }
+      .form-actions .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-card">
+    <img src="../images/ihya-logo.png" alt="IHYA NYC" class="login-logo" onerror="this.style.display='none'">
+    <h1 class="login-title">IHYA NYC</h1>
+    <p class="login-subtitle">Admin Portal — Events Management</p>
+    <input type="password" id="password-input" placeholder="Enter admin password" autocomplete="current-password" />
+    <button class="btn-login" onclick="attemptLogin()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+  </div>
+</div>
+
+<!-- ── ADMIN APP ───────────────────────────────── -->
+<div id="admin-app">
+  <div class="topbar">
+    <div class="topbar-brand">IHYA <span>Admin</span></div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+
+  <div class="admin-main">
+
+    <!-- Setup banner (shown until Supabase is configured) -->
+    <div class="setup-banner" id="setup-banner">
+      <div class="icon">⚙️</div>
+      <div>
+        <h4>Supabase not configured yet</h4>
+        <p>You need to add your Supabase URL and anon key before events will save. <a href="#" onclick="showConfig()" style="color: var(--green); font-weight:600;">Click here to configure</a>, or see the setup guide.</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('upcoming')">Upcoming Events</button>
+      <button class="tab-btn" onclick="switchTab('past')">Past Events</button>
+      <button class="tab-btn" onclick="switchTab('add')">+ Add Event</button>
+    </div>
+
+    <!-- Upcoming events tab -->
+    <div class="tab-content active" id="tab-upcoming">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Upcoming Events</div>
+          <div class="section-count" id="upcoming-count">Loading...</div>
+        </div>
+      </div>
+      <div class="events-list" id="upcoming-list">
+        <div class="empty-state"><div class="icon">⏳</div><p>Loading events...</p></div>
+      </div>
+    </div>
+
+    <!-- Past events tab -->
+    <div class="tab-content" id="tab-past">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Past Events</div>
+          <div class="section-count" id="past-count"></div>
+        </div>
+      </div>
+      <div class="events-list" id="past-list">
+        <div class="empty-state"><div class="icon">📅</div><p>No past events yet.</p></div>
+      </div>
+    </div>
+
+    <!-- Add/Edit event tab -->
+    <div class="tab-content" id="tab-add">
+      <div class="form-card">
+        <div class="form-card-title" id="form-title">Add New Event</div>
+        <input type="hidden" id="edit-id" value="" />
+
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Event Title *</label>
+            <input type="text" id="f-title" placeholder="e.g. Weekly Halaqa – The Purification of the Heart" />
+          </div>
+
+          <div class="form-group">
+            <label>Event Type</label>
+            <select id="f-type">
+              <option value="Weekly Halaqa">Weekly Halaqa</option>
+              <option value="Special Event">Special Event</option>
+              <option value="Community Gathering">Community Gathering</option>
+              <option value="Fundraiser">Fundraiser</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Date *</label>
+            <input type="date" id="f-date" />
+          </div>
+
+          <div class="form-group">
+            <label>Time</label>
+            <input type="time" id="f-time" />
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="f-location" placeholder="e.g. Brooklyn, NY" />
+          </div>
+
+          <div class="form-group">
+            <label>RSVP / Registration Link</label>
+            <input type="url" id="f-rsvp" placeholder="https://..." />
+          </div>
+
+          <div class="form-group full">
+            <label>Description</label>
+            <textarea id="f-description" placeholder="Brief description of the event..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Event Flyer</label>
+            <div class="flyer-upload-area" id="flyer-drop-zone">
+              <input type="file" id="f-flyer" accept="image/*" onchange="handleFlyerSelect(this)" />
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-label"><strong>Click to upload</strong> or drag & drop<br>JPG, PNG, WebP · Max 5MB</div>
+              <img id="flyer-preview" class="flyer-preview" alt="Flyer preview" />
+            </div>
+            <input type="hidden" id="f-flyer-url" value="" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+          <button class="btn btn-primary" id="save-btn" onclick="saveEvent()">
+            Publish Event
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── CONFIG OVERLAY ─────────────────────────── -->
+<div id="config-overlay">
+  <div class="config-modal">
+    <h3>Supabase Configuration</h3>
+    <p>Enter your Supabase project credentials. You only need to do this once per device. Find these in your Supabase project → Settings → API.</p>
+    <div class="form-group">
+      <label>Project URL</label>
+      <input type="text" id="cfg-url" placeholder="https://xxxxxxxxxxxx.supabase.co" />
+    </div>
+    <div class="form-group">
+      <label>Anon (Public) Key</label>
+      <input type="text" id="cfg-key" placeholder="eyJhbGci..." />
+    </div>
+    <div style="display:flex; gap:0.75rem; margin-top:1.5rem;">
+      <button class="btn btn-secondary" onclick="hideConfig()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveConfig()">Save & Connect</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ──────────────────────────────────── -->
+<div id="toast"></div>
+
+<script src="../js/supabase-admin.js"></script>
+</body>
+</html>
