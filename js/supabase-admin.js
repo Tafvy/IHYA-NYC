@@ -9,7 +9,7 @@ const PASSWORD_HASH = '460b33920fa4238f8bc78abbe86cc61c2c404567cc3a13887a6c3a9be
 
 // SUPABASE CREDENTIALS - pre-filled, admins don't need to configure anything
 const DEFAULT_SUPABASE_URL = 'https://dpinugfkomjxybdixsbz.supabase.co';
-const DEFAULT_SUPABASE_KEY = 'sb_publishable_HXKlYPpT9tisbt9qd06rWg_E-FAbSa0';
+const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaW51Z2Zrb21qeHliZGl4c2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDAyNjksImV4cCI6MjA5MTkxNjI2OX0.-BUEodcxcDF1SiFn-QHJq70f6yl7KrX_RPgpo_Q7zgM';
 
 let SUPABASE_URL = DEFAULT_SUPABASE_URL;
 let SUPABASE_KEY = DEFAULT_SUPABASE_KEY;
