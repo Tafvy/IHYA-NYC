@@ -376,7 +376,7 @@
     <script src="js/load-events-supabase.js"></script>
     
     <script>
-        // ============================================
+// ============================================
         // LAUNCHGOOD DONATION MODAL
         // ============================================
         function openDonationModal() {
@@ -390,81 +390,12 @@
         }
 
         document.getElementById('closeModal').addEventListener('click', closeDonationModal);
-        
         document.getElementById('donationModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeDonationModal();
-            }
+            if (e.target === this) closeDonationModal();
         });
-
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeDonationModal();
-            }
+            if (e.key === 'Escape') closeDonationModal();
         });
-
-        // ============================================
-        // RENDER EVENTS
-        // ============================================
-        function createEventCard(event, isCompact = false) {
-            const flyerHTML = (event.flyer && event.flyer !== null && event.flyer !== 'null')
-                ? `<img src="flyers/${event.flyer}" alt="${event.title}" class="event-flyer" onerror="this.parentElement.innerHTML='<div class=\\'event-flyer-placeholder\\'><span class=\\'date\\'>${event.dateDisplay}</span><span class=\\'month\\'>${event.monthDisplay}</span><span class=\\'title\\'>${event.title}</span></div>';">`
-                : `<div class="event-flyer-placeholder">
-                     <span class="date">${event.dateDisplay}</span>
-                     <span class="month">${event.monthDisplay}</span>
-                     <span class="title">${event.title}</span>
-                   </div>`;
-            
-            const descriptionHTML = isCompact 
-                ? `<p>${event.description.substring(0, 80)}...</p>`
-                : `<p>${event.description}</p>`;
-
-            return `
-                <div class="event-card">
-                    ${flyerHTML}
-                    <div class="event-details">
-                        <span class="event-tag ${event.type === 'weekly' ? 'weekly' : ''}">${event.type}</span>
-                        <h3>${event.title}</h3>
-                        ${descriptionHTML}
-                        <div class="event-meta">
-                            <div class="event-meta-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                                <span>${event.datetime}</span>
-                            </div>
-                            <div class="event-meta-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <span>${event.location}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-            
-            IHYA_EVENTS.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-                dot.setAttribute('aria-label', `Go to event ${i + 1}`);
-                dot.onclick = () => {
-                    const cards = eventsCarousel.querySelectorAll('.event-card');
-                    if (cards[i]) {
-                        eventsCarousel.scrollTo({ left: cards[i].offsetLeft - 20, behavior: 'smooth' });
-                    }
-                };
-                carouselDots.appendChild(dot);
-            });
-
-            eventsCarousel.addEventListener('scroll', () => {
-                const cards = eventsCarousel.querySelectorAll('.event-card');
-                if (cards.length > 0) {
-                    const cardWidth = cards[0].offsetWidth + 16;
-                    const idx = Math.round(eventsCarousel.scrollLeft / cardWidth);
-                    carouselDots.querySelectorAll('.carousel-dot').forEach((d, i) => 
-                        d.classList.toggle('active', i === idx)
-                    );
-                }
-            });
-        }
 
         // ============================================
         // MOBILE MENU
@@ -504,11 +435,11 @@
         window.addEventListener('scroll', () => {
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
-        
+
         document.querySelectorAll('.tier-btn').forEach(btn => {
-            btn.addEventListener('click', () => { 
-                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active')); 
-                btn.classList.add('active'); 
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             });
         });
     </script>
