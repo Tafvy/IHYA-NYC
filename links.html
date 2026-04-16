@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHYA NYC - Links</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="Connect with IHYA NYC - Events, community updates, and ways to get involved with young Muslim professionals in New York City.">
+    <link rel="canonical" href="https://ihyanyc.org/links">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="ihya-logo.png">
+    <link rel="apple-touch-icon" href="ihya-logo.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ihya-green: #1B5E41;
+            --ihya-green-dark: #134332;
+            --ihya-gold: #B8A04A;
+            --ihya-cream: #F8F5F0;
+            --ihya-sand: #E8E2D9;
+            --ihya-text: #2C2C2C;
+            --ihya-text-light: #5A5A5A;
+            --ihya-white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--ihya-cream);
+            color: var(--ihya-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .username {
+            font-size: 1.1rem;
+            color: var(--ihya-text);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            animation: fadeInUp 0.6s ease 0.1s backwards;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease 0.2s backwards;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--ihya-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ihya-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            background: var(--ihya-green);
+            color: var(--ihya-white);
+        }
+
+        .social-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Link Buttons */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .link-item {
+            background: var(--ihya-white);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            text-decoration: none;
+            color: var(--ihya-text);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            animation: fadeInUp 0.6s ease backwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--ihya-green);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .link-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .link-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .link-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            width: 32px;
+            text-align: center;
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--ihya-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .link-subtitle {
+            font-size: 0.85rem;
+            color: var(--ihya-text-light);
+        }
+
+        .link-arrow {
+            color: var(--ihya-green);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .link-item:hover .link-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Featured Link (RSVP) */
+        .link-featured {
+            background: linear-gradient(135deg, var(--ihya-green-dark) 0%, var(--ihya-green) 100%);
+            color: var(--ihya-white);
+        }
+
+        .link-featured .link-title,
+        .link-featured .link-subtitle {
+            color: var(--ihya-white);
+        }
+
+        .link-featured .link-arrow {
+            color: var(--ihya-white);
+        }
+
+        .link-featured::before {
+            background: var(--ihya-gold);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--ihya-text-light);
+            font-size: 0.85rem;
+            animation: fadeIn 0.6s ease 0.8s backwards;
+        }
+
+        .footer a {
+            color: var(--ihya-green);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--ihya-text-light);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--ihya-sand);
+            border-top-color: var(--ihya-green);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Stagger animation delays for links */
+        .link-item:nth-child(1) { animation-delay: 0.3s; }
+        .link-item:nth-child(2) { animation-delay: 0.4s; }
+        .link-item:nth-child(3) { animation-delay: 0.5s; }
+        .link-item:nth-child(4) { animation-delay: 0.6s; }
+        .link-item:nth-child(5) { animation-delay: 0.7s; }
+        .link-item:nth-child(6) { animation-delay: 0.8s; }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            .username {
+                font-size: 1rem;
+            }
+
+            .link-item {
+                padding: 1rem 1.25rem;
+            }
+
+            .link-title {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="ihya-logo.png" alt="IHYA NYC" class="logo">
+            <div class="username">@ihyanyc</div>
+            
+            <!-- Social Icons -->
+            <div class="social-icons">
+                <a href="https://www.instagram.com/ihyanyc/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/@ihyanyc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+                <a href="https://www.tiktok.com/@ihyanyc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                    </svg>
+                </a>
+                <a href="https://open.spotify.com/show/3KNN86MbX9uvL10eRMBvOu" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Spotify">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                    </svg>
+                </a>
+                <a href="https://chat.whatsapp.com/JobAfA8iQdv6kUg9UfgHrO" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Links Container -->
+        <div class="links-container" id="linksContainer">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading links...</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>A space for young professionals to reconnect with faith, purpose, and each other.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="/">Visit ihyanyc.org</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Load and display links
+        async function loadLinks() {
+            try {
+                const response = await fetch('data/links.json');
+                if (!response.ok) throw new Error('Failed to load links');
+                
+                const data = await response.json();
+                displayLinks(data.links || []);
+                
+            } catch (error) {
+                console.error('Error loading links:', error);
+                document.getElementById('linksContainer').innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--ihya-text-light);">
+                        <p>Unable to load links at this time.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayLinks(links) {
+            const container = document.getElementById('linksContainer');
+            
+            if (links.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--ihya-text-light);">
+                        <p>No links available at this time.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort by order
+            const sortedLinks = links
+                .filter(link => link.enabled !== false)
+                .sort((a, b) => (a.order || 999) - (b.order || 999));
+
+            container.innerHTML = sortedLinks.map(link => {
+                const isFeatured = link.featured || link.type === 'rsvp';
+                const classes = isFeatured ? 'link-item link-featured' : 'link-item';
+                
+                return `
+                    <a href="${link.url}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="${classes}"
+                       onclick="trackClick('${link.id}')">
+                        <div class="link-icon">${link.icon || '🔗'}</div>
+                        <div class="link-content">
+                            <div class="link-title">${link.title}</div>
+                            ${link.subtitle ? `<div class="link-subtitle">${link.subtitle}</div>` : ''}
+                        </div>
+                        <div class="link-arrow">→</div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        async function trackClick(linkId) {
+            try {
+                // Track click via Netlify function
+                await fetch('/.netlify/functions/track-click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ linkId })
+                });
+            } catch (error) {
+                // Silent fail - don't block navigation
+                console.error('Click tracking failed:', error);
+            }
+        }
+
+        // Load links on page load
+        loadLinks();
+    </script>
+</body>
+</html>
