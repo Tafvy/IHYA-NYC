@@ -1,0 +1,47 @@
+{
+  "links": [
+    {
+      "id": "link_001",
+      "title": "RSVP: Stories of the Prophets (4/7)",
+      "subtitle": "Tuesday halaqas at 7:00 PM",
+      "url": "https://forms.gle/your-rsvp-form-here",
+      "icon": "📅",
+      "type": "rsvp",
+      "featured": true,
+      "enabled": true,
+      "order": 1,
+      "clicks": 0
+    },
+    {
+      "id": "link_002",
+      "title": "Support Ihya",
+      "subtitle": "Help us continue building community",
+      "url": "https://www.launchgood.com/v4/campaign/reviving_community_in_nyc_with_ihya",
+      "icon": "🤲",
+      "enabled": true,
+      "order": 2,
+      "clicks": 0
+    },
+    {
+      "id": "link_003",
+      "title": "WhatsApp Announcements",
+      "subtitle": "Join our community updates group",
+      "url": "https://chat.whatsapp.com/JobAfA8iQdv6kUg9UfgHrO",
+      "icon": "📱",
+      "enabled": true,
+      "order": 3,
+      "clicks": 0
+    },
+    {
+      "id": "link_004",
+      "title": "Ihya Podcast",
+      "subtitle": "Listen on Spotify",
+      "url": "https://open.spotify.com/show/3KNN86MbX9uvL10eRMBvOu",
+      "icon": "🎙️",
+      "enabled": true,
+      "order": 4,
+      "clicks": 0
+    }
+  ],
+  "lastUpdated": "2026-04-15T20:00:00.000Z"
+}
