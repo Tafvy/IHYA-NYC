@@ -303,10 +303,11 @@ function setupDragDrop() {
 
 // TABS
 function switchTab(name) {
-  const names = ['upcoming','recurring','past','add'];
+  const names = ['upcoming','recurring','past','links','add'];
   document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', names[i] === name));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   document.getElementById(`tab-${name}`).classList.add('active');
+  if (name === 'links') fetchLinks();
   if (name !== 'add') { editingId = null; flyerFile = null; }
 }
 
@@ -323,3 +324,120 @@ function toast(msg, type='success') {
 function escHtml(s) { if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function fmtDate(s) { if(!s) return ''; const d=new Date(s+'T00:00:00'); return d.toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric',year:'numeric'}); }
 function fmt(t) { if(!t) return ''; const [h,m]=t.split(':').map(Number); return `${((h%12)||12)}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`; }
+
+// ── LINKS MANAGEMENT ────────────────────────────────────────────────────────
+
+let allLinks  = [];
+let editingLinkId = null;
+
+async function fetchLinks() {
+  try {
+    const data = await sbFetch('links?order=sort_order.asc&select=*');
+    allLinks = data || [];
+    renderLinks();
+  } catch (e) {
+    console.error('Links fetch error:', e);
+  }
+}
+
+function renderLinks() {
+  const el = document.getElementById('links-list-admin');
+  if (!el) return;
+  document.getElementById('links-count').textContent = `${allLinks.length} link${allLinks.length !== 1 ? 's' : ''}`;
+
+  if (!allLinks.length) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">🔗</div><p>No links yet. Add your first link below.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = allLinks.map(l => `
+    <div class="event-card">
+      <div class="event-card-flyer-placeholder" style="font-size:1.8rem">${l.emoji || '🔗'}</div>
+      <div class="event-card-info">
+        <div class="event-card-title">${escHtml(l.title)}</div>
+        <div class="event-card-meta" style="word-break:break-all">${escHtml(l.url)}</div>
+        <div style="margin-top:0.35rem">
+          <span class="event-card-type">Order: ${l.sort_order || 0}</span>
+          ${l.featured ? '<span class="event-card-recurring">⭐ Featured</span>' : ''}
+        </div>
+      </div>
+      <div class="event-card-actions">
+        <button class="btn btn-secondary btn-sm" onclick="editLink('${l.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteLink('${l.id}','${escHtml(l.title)}')">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+function editLink(id) {
+  const l = allLinks.find(x => x.id === id);
+  if (!l) return;
+  editingLinkId = id;
+  document.getElementById('lf-title').value      = l.title      || '';
+  document.getElementById('lf-url').value        = l.url        || '';
+  document.getElementById('lf-emoji').value      = l.emoji      || '';
+  document.getElementById('lf-order').value      = l.sort_order || 0;
+  document.getElementById('lf-featured').checked = l.featured   || false;
+  document.getElementById('link-form-title').textContent = 'Edit Link';
+  document.getElementById('link-form-area').style.display = 'block';
+  document.getElementById('link-form-area').scrollIntoView({ behavior: 'smooth' });
+}
+
+function showLinkForm() {
+  editingLinkId = null;
+  document.getElementById('lf-title').value      = '';
+  document.getElementById('lf-url').value        = '';
+  document.getElementById('lf-emoji').value      = '';
+  document.getElementById('lf-order').value      = allLinks.length;
+  document.getElementById('lf-featured').checked = false;
+  document.getElementById('link-form-title').textContent = 'Add New Link';
+  document.getElementById('link-form-area').style.display = 'block';
+  document.getElementById('link-form-area').scrollIntoView({ behavior: 'smooth' });
+}
+
+function hideLinkForm() {
+  editingLinkId = null;
+  document.getElementById('link-form-area').style.display = 'none';
+}
+
+async function saveLink() {
+  const title = document.getElementById('lf-title').value.trim();
+  const url   = document.getElementById('lf-url').value.trim();
+  if (!title) { toast('Please enter a link title.', 'error'); return; }
+  if (!url)   { toast('Please enter a URL.', 'error'); return; }
+
+  const btn = document.getElementById('save-link-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Saving...';
+
+  const payload = {
+    title:      title,
+    url:        url,
+    emoji:      document.getElementById('lf-emoji').value.trim() || null,
+    sort_order: parseInt(document.getElementById('lf-order').value) || 0,
+    featured:   document.getElementById('lf-featured').checked
+  };
+
+  try {
+    if (editingLinkId) {
+      await sbFetch(`links?id=eq.${editingLinkId}`, { method: 'PATCH', body: JSON.stringify(payload) });
+      toast('Link updated!', 'success');
+    } else {
+      await sbFetch('links', { method: 'POST', body: JSON.stringify(payload) });
+      toast('Link added!', 'success');
+    }
+    hideLinkForm();
+    await fetchLinks();
+  } catch (e) {
+    toast('Error saving link: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false; btn.innerHTML = 'Save Link';
+  }
+}
+
+async function deleteLink(id, title) {
+  if (!confirm(`Delete "${title}"?`)) return;
+  try {
+    await sbFetch(`links?id=eq.${id}`, { method: 'DELETE' });
+    toast('Link deleted.', 'success');
+    await fetchLinks();
+  } catch (e) { toast('Error: ' + e.message, 'error'); }
+}
