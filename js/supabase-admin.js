@@ -1,393 +1,321 @@
-/**
- * IHYA NYC - Supabase Admin JS
- * Handles: login, events CRUD, flyer uploads, recurring events
- */
-
-const PASSWORD_HASH = '460b33920fa4238f8bc78abbe86cc61c2c404567cc3a13887a6c3a9be81eab23';
-const SUPABASE_URL  = 'https://dpinugfkomjxybdixsbz.supabase.co';
-const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaW51Z2Zrb21qeHliZGl4c2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDAyNjksImV4cCI6MjA5MTkxNjI2OX0.-BUEodcxcDF1SiFn-QHJq70f6yl7KrX_RPgpo_Q7zgM';
-
-let allEvents  = [];
-let editingId  = null;
-let flyerFile  = null;
-let isLoggedIn = false;
-let scheduleType = 'one-time';
-
-// INIT
-window.addEventListener('DOMContentLoaded', () => {
-  buildTimeOptions('f-time');
-  buildTimeOptions('f-recurring-time');
-  checkSession();
-  setupDragDrop();
-});
-
-// Build 15-minute increment time dropdown
-function buildTimeOptions(selectId) {
-  const sel = document.getElementById(selectId);
-  if (!sel) return;
-  for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 15) {
-      const ampm  = h >= 12 ? 'PM' : 'AM';
-      const hour  = ((h % 12) || 12);
-      const label = `${hour}:${String(m).padStart(2,'0')} ${ampm}`;
-      const value = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
-      const opt   = document.createElement('option');
-      opt.value   = value;
-      opt.textContent = label;
-      sel.appendChild(opt);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IHYA NYC — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green:#1B5E41; --green-dark:#134332; --green-light:#2a7a56;
+      --gold:#B8A04A; --gold-light:#d4bc6a;
+      --cream:#F8F5F0; --cream-dark:#ede9e2;
+      --text:#1a1a1a; --text-muted:#6b6b6b; --white:#ffffff;
+      --danger:#c0392b; --danger-bg:#fdf0ef;
+      --success:#1B5E41; --success-bg:#edf7f2;
+      --shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md:0 4px 16px rgba(0,0,0,0.10);
+      --shadow-lg:0 8px 32px rgba(0,0,0,0.13);
+      --radius:10px;
     }
-  }
-}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
 
-// SCHEDULE TOGGLE
-function setSchedule(type) {
-  scheduleType = type;
-  document.getElementById('btn-one-time').classList.toggle('active', type === 'one-time');
-  document.getElementById('btn-recurring').classList.toggle('active', type === 'recurring');
+    /* LOGIN */
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--green-dark) 0%,var(--green) 60%,var(--green-light) 100%);padding:2rem}
+    .login-card{background:var(--white);border-radius:16px;padding:3rem 2.5rem;width:100%;max-width:400px;box-shadow:var(--shadow-lg);text-align:center}
+    .login-logo{width:72px;height:72px;margin:0 auto 1.5rem;display:block}
+    .login-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--green-dark);margin-bottom:0.25rem}
+    .login-subtitle{color:var(--text-muted);font-size:0.9rem;margin-bottom:2rem}
+    .login-card input[type="password"]{width:100%;padding:0.85rem 1rem;border:1.5px solid var(--cream-dark);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text);background:var(--cream);transition:border-color 0.2s;margin-bottom:1rem}
+    .login-card input[type="password"]:focus{outline:none;border-color:var(--green)}
+    .btn-login{width:100%;padding:0.9rem;background:var(--green);color:var(--white);border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;transition:background 0.2s}
+    .btn-login:hover{background:var(--green-dark)}
+    .login-error{color:var(--danger);font-size:0.85rem;margin-top:0.75rem;display:none}
 
-  const dateFields      = document.getElementById('date-fields');
-  const recurringFields = document.getElementById('recurring-fields');
+    /* TOP BAR */
+    #admin-app{display:none}
+    .topbar{background:var(--green-dark);color:var(--white);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md)}
+    .topbar-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold-light)}
+    .topbar-brand span{color:var(--white);font-weight:400}
+    .btn-logout{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:var(--white);padding:0.45rem 1.1rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.85rem;cursor:pointer;transition:background 0.2s}
+    .btn-logout:hover{background:rgba(255,255,255,0.2)}
 
-  if (type === 'one-time') {
-    dateFields.style.display      = 'contents';
-    recurringFields.style.display = 'none';
-  } else {
-    dateFields.style.display      = 'none';
-    recurringFields.style.display = 'contents';
-  }
-}
+    .admin-main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem}
 
-// AUTH
-async function sha256(message) {
-  const msgBuffer  = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.3rem;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;border:none;transition:all 0.18s}
+    .btn-primary{background:var(--green);color:var(--white)}.btn-primary:hover{background:var(--green-dark)}
+    .btn-secondary{background:var(--white);color:var(--green);border:1.5px solid var(--green)}.btn-secondary:hover{background:var(--cream)}
+    .btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid #f5c6c2}.btn-danger:hover{background:#fbe0de}
+    .btn-sm{padding:0.4rem 0.85rem;font-size:0.82rem}
 
-async function attemptLogin() {
-  const input = document.getElementById('password-input').value;
-  const error = document.getElementById('login-error');
-  const hash  = await sha256(input);
-  if (hash === PASSWORD_HASH) {
-    error.style.display = 'none';
-    sessionStorage.setItem('ihya_admin_session', 'active');
-    showApp();
-  } else {
-    error.style.display = 'block';
-    document.getElementById('password-input').value = '';
-    document.getElementById('password-input').focus();
-  }
-}
+    /* TOAST */
+    #toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.5rem;border-radius:var(--radius);font-size:0.9rem;font-weight:500;box-shadow:var(--shadow-lg);z-index:9999;transform:translateY(80px);opacity:0;transition:all 0.3s ease;max-width:340px}
+    #toast.show{transform:translateY(0);opacity:1}
+    #toast.success{background:var(--success-bg);color:var(--success);border:1px solid #b6deca}
+    #toast.error{background:var(--danger-bg);color:var(--danger);border:1px solid #f5c6c2}
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !isLoggedIn) attemptLogin();
-});
+    /* FORM */
+    .form-card{background:var(--white);border-radius:14px;padding:2rem;box-shadow:var(--shadow-sm);margin-bottom:2rem;border:1px solid var(--cream-dark)}
+    .form-card-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--green-dark);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--cream-dark)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:0.4rem}
+    .form-group.full{grid-column:1/-1}
+    label{font-size:0.82rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em}
+    .label-opt{font-size:0.75rem;color:#aaa;font-weight:400;text-transform:none;letter-spacing:0;margin-left:0.3rem}
+    input[type="text"],input[type="date"],input[type="url"],select,textarea{padding:0.75rem 0.9rem;border:1.5px solid var(--cream-dark);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.95rem;color:var(--text);background:var(--cream);transition:border-color 0.2s;width:100%}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);background:var(--white)}
+    textarea{resize:vertical;min-height:90px}
 
-function checkSession() {
-  if (sessionStorage.getItem('ihya_admin_session') === 'active') showApp();
-}
+    /* TIME PICKER */
+    .time-picker{display:flex;gap:0.5rem;align-items:center}
+    .time-picker select{flex:1;padding:0.75rem 0.5rem;text-align:center}
+    .time-picker .sep{color:var(--text-muted);font-weight:600;font-size:1.1rem;flex-shrink:0}
 
-function showApp() {
-  isLoggedIn = true;
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('admin-app').style.display    = 'block';
-  fetchEvents();
-}
+    /* SCHEDULE TOGGLE */
+    .schedule-toggle{display:flex;gap:0.5rem}
+    .schedule-btn{flex:1;padding:0.65rem;border:1.5px solid var(--cream-dark);border-radius:8px;background:var(--cream);color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;transition:all 0.18s;text-align:center}
+    .schedule-btn.active{border-color:var(--green);background:rgba(27,94,65,0.08);color:var(--green)}
 
-function logout() {
-  sessionStorage.removeItem('ihya_admin_session');
-  isLoggedIn = false;
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('admin-app').style.display    = 'none';
-  document.getElementById('password-input').value = '';
-}
+    /* FLYER */
+    .flyer-upload-area{border:2px dashed var(--cream-dark);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--cream);position:relative}
+    .flyer-upload-area:hover,.flyer-upload-area.dragover{border-color:var(--green);background:#f0f7f4}
+    .flyer-upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .flyer-preview{max-height:160px;border-radius:8px;margin-top:0.75rem;display:none}
+    .upload-icon{font-size:2rem;margin-bottom:0.5rem}
+    .upload-label{color:var(--text-muted);font-size:0.88rem}
+    .upload-label strong{color:var(--green)}
 
-// SUPABASE HELPERS
-function sbHeaders() {
-  return {
-    'apikey':        SUPABASE_KEY,
-    'Authorization': `Bearer ${SUPABASE_KEY}`,
-    'Content-Type':  'application/json',
-    'Prefer':        'return=representation'
-  };
-}
+    .form-actions{display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--cream-dark)}
 
-async function sbFetch(path, options = {}) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    ...options,
-    headers: { ...sbHeaders(), ...(options.headers || {}) }
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `HTTP ${res.status}`);
-  }
-  if (res.status === 204) return null;
-  return res.json();
-}
+    /* EVENT LIST */
+    .events-list{display:flex;flex-direction:column;gap:1rem}
+    .event-card{background:var(--white);border:1px solid var(--cream-dark);border-radius:12px;padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;transition:box-shadow 0.18s}
+    .event-card:hover{box-shadow:var(--shadow-md)}
+    .event-card-flyer{width:64px;height:64px;border-radius:8px;object-fit:cover}
+    .event-card-flyer-placeholder{width:64px;height:64px;border-radius:8px;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+    .event-card-info{min-width:0}
+    .event-card-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--green-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .event-card-meta{font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem}
+    .event-card-type{display:inline-block;font-size:0.72rem;font-weight:600;padding:0.15rem 0.55rem;border-radius:4px;background:rgba(27,94,65,0.1);color:var(--green);text-transform:uppercase;letter-spacing:0.04em;margin-top:0.35rem}
+    .event-card-recurring{display:inline-block;font-size:0.72rem;font-weight:600;padding:0.15rem 0.55rem;border-radius:4px;background:rgba(184,160,74,0.15);color:var(--gold);text-transform:uppercase;letter-spacing:0.04em;margin-top:0.35rem;margin-left:0.3rem}
+    .event-card-actions{display:flex;gap:0.5rem;flex-shrink:0}
 
-// STORAGE
-async function uploadFlyer(file) {
-  const ext      = file.name.split('.').pop();
-  const fileName = `flyer_${Date.now()}.${ext}`;
-  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/flyers/${fileName}`, {
-    method:  'POST',
-    headers: {
-      'apikey':        SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type':  file.type,
-      'x-upsert':      'true'
-    },
-    body: file
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || 'Upload failed');
-  }
-  return `${SUPABASE_URL}/storage/v1/object/public/flyers/${fileName}`;
-}
+    /* TABS */
+    .tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:2px solid var(--cream-dark)}
+    .tab-btn{padding:0.65rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;color:var(--text-muted);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:all 0.18s}
+    .tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+    .tab-content{display:none}.tab-content.active{display:block}
 
-// FETCH & RENDER
-async function fetchEvents() {
-  try {
-    const data = await sbFetch('events?order=date.asc.nullsfirst&select=*');
-    allEvents  = data || [];
-    renderEvents();
-  } catch (e) {
-    console.error('Fetch error:', e);
-    toast('Could not load events: ' + e.message, 'error');
-  }
-}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--green-dark)}
+    .section-count{font-size:0.85rem;color:var(--text-muted);margin-top:0.1rem}
 
-function renderEvents() {
-  const today     = new Date().toISOString().split('T')[0];
-  const upcoming  = allEvents.filter(e => !e.is_recurring && e.date && e.date >= today);
-  const recurring = allEvents.filter(e => e.is_recurring);
-  const past      = allEvents.filter(e => !e.is_recurring && e.date && e.date < today).reverse();
+    .empty-state{text-align:center;padding:3rem 2rem;color:var(--text-muted);background:var(--white);border-radius:12px;border:1px solid var(--cream-dark)}
+    .empty-state .icon{font-size:2.5rem;margin-bottom:0.75rem}
 
-  document.getElementById('upcoming-count').textContent  = `${upcoming.length} event${upcoming.length !== 1 ? 's' : ''}`;
-  document.getElementById('recurring-count').textContent = `${recurring.length} recurring`;
-  document.getElementById('past-count').textContent      = `${past.length} event${past.length !== 1 ? 's' : ''}`;
+    .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:0.4rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-  renderList('upcoming-list',  upcoming,  '📅', 'No upcoming events. Use "+ Add Event" to create one.');
-  renderList('recurring-list', recurring, '🔁', 'No recurring events yet.');
-  renderList('past-list',      past,      '🗂️', 'No past events.');
-}
+    @media(max-width:640px){
+      .form-grid{grid-template-columns:1fr}
+      .event-card{grid-template-columns:1fr}
+      .event-card-flyer,.event-card-flyer-placeholder{display:none}
+      .topbar{padding:0 1rem}
+      .admin-main{padding:1.5rem 1rem}
+      .form-card{padding:1.25rem}
+      .form-actions{flex-direction:column}
+      .form-actions .btn{width:100%;justify-content:center}
+      .schedule-toggle{flex-direction:column}
+      .time-picker{flex-wrap:wrap}
+    }
+  </style>
+</head>
+<body>
 
-function renderList(containerId, events, emptyIcon, emptyMsg) {
-  const container = document.getElementById(containerId);
-  if (!events.length) {
-    container.innerHTML = `<div class="empty-state"><div class="icon">${emptyIcon}</div><p>${emptyMsg}</p></div>`;
-    return;
-  }
-  container.innerHTML = events.map(ev => {
-    const meta = ev.is_recurring
-      ? `Every ${ev.recurring_day}${ev.time ? ' · ' + formatTime(ev.time) : ''}`
-      : `${ev.date ? formatDate(ev.date) : ''}${ev.time ? ' · ' + formatTime(ev.time) : ''}`;
+<div id="login-screen">
+  <div class="login-card">
+    <img src="../images/ihya-logo.png" alt="IHYA NYC" class="login-logo" onerror="this.style.display='none'">
+    <h1 class="login-title">IHYA NYC</h1>
+    <p class="login-subtitle">Admin Portal — Events Management</p>
+    <input type="password" id="password-input" placeholder="Enter admin password" autocomplete="current-password" />
+    <button class="btn-login" onclick="attemptLogin()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+  </div>
+</div>
 
-    return `
-      <div class="event-card">
-        ${ev.flyer_url
-          ? `<img class="event-card-flyer" src="${ev.flyer_url}" alt="Flyer" />`
-          : `<div class="event-card-flyer-placeholder">🕌</div>`}
-        <div class="event-card-info">
-          <div class="event-card-title">${escHtml(ev.title)}</div>
-          <div class="event-card-meta">${meta}${ev.location ? ' · ' + escHtml(ev.location) : ''}</div>
-          <div style="margin-top:0.35rem;">
-            <span class="event-card-type">${escHtml(ev.type || 'Event')}</span>
-            ${ev.is_recurring ? '<span class="event-card-recurring">🔁 Recurring</span>' : ''}
+<div id="admin-app">
+  <div class="topbar">
+    <div class="topbar-brand">IHYA <span>Admin</span></div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+
+  <div class="admin-main">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('upcoming')">Upcoming</button>
+      <button class="tab-btn" onclick="switchTab('recurring')">Recurring</button>
+      <button class="tab-btn" onclick="switchTab('past')">Past</button>
+      <button class="tab-btn" onclick="switchTab('add')">+ Add Event</button>
+    </div>
+
+    <div class="tab-content active" id="tab-upcoming">
+      <div class="section-header"><div><div class="section-title">Upcoming Events</div><div class="section-count" id="upcoming-count"></div></div></div>
+      <div class="events-list" id="upcoming-list"><div class="empty-state"><div class="icon">⏳</div><p>Loading...</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-recurring">
+      <div class="section-header"><div><div class="section-title">Recurring Events</div><div class="section-count" id="recurring-count"></div></div></div>
+      <div class="events-list" id="recurring-list"><div class="empty-state"><div class="icon">🔁</div><p>No recurring events yet.</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-past">
+      <div class="section-header"><div><div class="section-title">Past Events</div><div class="section-count" id="past-count"></div></div></div>
+      <div class="events-list" id="past-list"><div class="empty-state"><div class="icon">🗂️</div><p>No past events.</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-add">
+      <div class="form-card">
+        <div class="form-card-title" id="form-title">Add New Event</div>
+        <input type="hidden" id="edit-id" />
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label>Event Title *</label>
+            <input type="text" id="f-title" placeholder="e.g. Weekly Halaqa – Stories of the Prophets" />
           </div>
+
+          <div class="form-group">
+            <label>Event Type</label>
+            <select id="f-type">
+              <option value="Weekly Halaqa">Weekly Halaqa</option>
+              <option value="Special Event">Special Event</option>
+              <option value="Community Gathering">Community Gathering</option>
+              <option value="Fundraiser">Fundraiser</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Sisters Event">Sisters Event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Schedule Type *</label>
+            <div class="schedule-toggle">
+              <button type="button" class="schedule-btn active" id="btn-one-time" onclick="setSchedule('one-time')">One-Time</button>
+              <button type="button" class="schedule-btn" id="btn-recurring" onclick="setSchedule('recurring')">Weekly Recurring</button>
+            </div>
+          </div>
+
+          <!-- ONE-TIME FIELDS -->
+          <div id="date-fields" style="display:contents">
+            <div class="form-group">
+              <label>Date *</label>
+              <input type="date" id="f-date" />
+            </div>
+            <div class="form-group">
+              <label>Time <span class="label-opt">(optional)</span></label>
+              <div class="time-picker">
+                <select id="f-time-hour" style="width:auto">
+                  <option value="">--</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <span class="sep">:</span>
+                <select id="f-time-min" style="width:auto">
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+                <select id="f-time-ampm" style="width:auto">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- RECURRING FIELDS -->
+          <div id="recurring-fields" style="display:none">
+            <div class="form-group">
+              <label>Day of Week</label>
+              <select id="f-day">
+                <option value="Sunday">Every Sunday</option>
+                <option value="Monday">Every Monday</option>
+                <option value="Tuesday">Every Tuesday</option>
+                <option value="Wednesday">Every Wednesday</option>
+                <option value="Thursday">Every Thursday</option>
+                <option value="Friday">Every Friday</option>
+                <option value="Saturday">Every Saturday</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Time <span class="label-opt">(optional)</span></label>
+              <div class="time-picker">
+                <select id="f-rtime-hour" style="width:auto">
+                  <option value="">--</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <span class="sep">:</span>
+                <select id="f-rtime-min" style="width:auto">
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+                <select id="f-rtime-ampm" style="width:auto">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Location <span class="label-opt">(optional)</span></label>
+            <input type="text" id="f-location" placeholder="e.g. Masjid Baitul Mukarram, Astoria" />
+          </div>
+
+          <div class="form-group">
+            <label>RSVP / Registration Link <span class="label-opt">(optional)</span></label>
+            <input type="url" id="f-rsvp" placeholder="https://..." />
+          </div>
+
+          <div class="form-group full">
+            <label>Description <span class="label-opt">(optional)</span></label>
+            <textarea id="f-description" placeholder="Brief description of the event..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Event Flyer <span class="label-opt">(optional)</span></label>
+            <div class="flyer-upload-area" id="flyer-drop-zone">
+              <input type="file" id="f-flyer" accept="image/*" onchange="handleFlyerSelect(this)" />
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-label"><strong>Click to upload</strong> or drag & drop<br>JPG, PNG, WebP · Max 5MB</div>
+              <img id="flyer-preview" class="flyer-preview" alt="Flyer preview" />
+            </div>
+            <input type="hidden" id="f-flyer-url" />
+          </div>
+
         </div>
-        <div class="event-card-actions">
-          <button class="btn btn-secondary btn-sm" onclick="editEvent('${ev.id}')">Edit</button>
-          <button class="btn btn-danger btn-sm"    onclick="deleteEvent('${ev.id}', '${escHtml(ev.title)}')">Delete</button>
+
+        <div class="form-actions">
+          <button class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+          <button class="btn btn-primary" id="save-btn" onclick="saveEvent()">Publish Event</button>
         </div>
-      </div>`;
-  }).join('');
-}
+      </div>
+    </div>
 
-// ADD / EDIT / SAVE
-function editEvent(id) {
-  const ev = allEvents.find(e => e.id === id);
-  if (!ev) return;
+  </div>
+</div>
 
-  editingId = id;
-  document.getElementById('form-title').textContent  = 'Edit Event';
-  document.getElementById('edit-id').value           = id;
-  document.getElementById('f-title').value           = ev.title       || '';
-  document.getElementById('f-type').value            = ev.type        || 'Weekly Halaqa';
-  document.getElementById('f-location').value        = ev.location    || '';
-  document.getElementById('f-rsvp').value            = ev.rsvp_link   || '';
-  document.getElementById('f-description').value     = ev.description || '';
-  document.getElementById('f-flyer-url').value       = ev.flyer_url   || '';
-
-  if (ev.is_recurring) {
-    setSchedule('recurring');
-    document.getElementById('f-day').value            = ev.recurring_day || 'Tuesday';
-    document.getElementById('f-recurring-time').value = ev.time || '';
-  } else {
-    setSchedule('one-time');
-    document.getElementById('f-date').value  = ev.date || '';
-    document.getElementById('f-time').value  = ev.time || '';
-  }
-
-  const preview = document.getElementById('flyer-preview');
-  if (ev.flyer_url) { preview.src = ev.flyer_url; preview.style.display = 'block'; }
-  else              { preview.style.display = 'none'; }
-  flyerFile = null;
-
-  switchTab('add');
-}
-
-function resetForm() {
-  editingId = null;
-  flyerFile = null;
-  setSchedule('one-time');
-  document.getElementById('form-title').textContent  = 'Add New Event';
-  document.getElementById('edit-id').value           = '';
-  document.getElementById('f-title').value           = '';
-  document.getElementById('f-type').value            = 'Weekly Halaqa';
-  document.getElementById('f-date').value            = '';
-  document.getElementById('f-time').value            = '';
-  document.getElementById('f-location').value        = '';
-  document.getElementById('f-rsvp').value            = '';
-  document.getElementById('f-description').value     = '';
-  document.getElementById('f-flyer-url').value       = '';
-  document.getElementById('flyer-preview').style.display = 'none';
-  document.getElementById('f-flyer').value           = '';
-  switchTab('upcoming');
-}
-
-async function saveEvent() {
-  const title = document.getElementById('f-title').value.trim();
-  if (!title) { toast('Please enter an event title.', 'error'); return; }
-
-  const isRecurring = scheduleType === 'recurring';
-  const date = document.getElementById('f-date').value;
-  if (!isRecurring && !date) { toast('Please select a date, or choose Weekly Recurring.', 'error'); return; }
-
-  const btn = document.getElementById('save-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Saving...';
-
-  try {
-    let flyerUrl = document.getElementById('f-flyer-url').value || null;
-    if (flyerFile) {
-      toast('Uploading flyer...', 'success');
-      flyerUrl = await uploadFlyer(flyerFile);
-    }
-
-    const time = isRecurring
-      ? document.getElementById('f-recurring-time').value || null
-      : document.getElementById('f-time').value || null;
-
-    const payload = {
-      title:         title,
-      type:          document.getElementById('f-type').value,
-      is_recurring:  isRecurring,
-      date:          isRecurring ? null : date,
-      recurring_day: isRecurring ? document.getElementById('f-day').value : null,
-      time:          time,
-      location:      document.getElementById('f-location').value.trim() || null,
-      rsvp_link:     document.getElementById('f-rsvp').value.trim() || null,
-      description:   document.getElementById('f-description').value.trim() || null,
-      flyer_url:     flyerUrl
-    };
-
-    if (editingId) {
-      await sbFetch(`events?id=eq.${editingId}`, { method: 'PATCH', body: JSON.stringify(payload) });
-      toast('Event updated!', 'success');
-    } else {
-      await sbFetch('events', { method: 'POST', body: JSON.stringify(payload) });
-      toast('Event published!', 'success');
-    }
-
-    resetForm();
-    await fetchEvents();
-  } catch (e) {
-    console.error('Save error:', e);
-    toast('Error saving event: ' + e.message, 'error');
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = 'Publish Event';
-  }
-}
-
-async function deleteEvent(id, title) {
-  if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
-  try {
-    await sbFetch(`events?id=eq.${id}`, { method: 'DELETE' });
-    toast('Event deleted.', 'success');
-    await fetchEvents();
-  } catch (e) {
-    toast('Error deleting: ' + e.message, 'error');
-  }
-}
-
-// FLYER
-function handleFlyerSelect(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { toast('Flyer must be under 5MB.', 'error'); input.value = ''; return; }
-  flyerFile = file;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const preview = document.getElementById('flyer-preview');
-    preview.src = e.target.result;
-    preview.style.display = 'block';
-  };
-  reader.readAsDataURL(file);
-}
-
-function setupDragDrop() {
-  const zone = document.getElementById('flyer-drop-zone');
-  if (!zone) return;
-  zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('dragover'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-  zone.addEventListener('drop', e => {
-    e.preventDefault();
-    zone.classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      document.getElementById('f-flyer').files = dt.files;
-      handleFlyerSelect(document.getElementById('f-flyer'));
-    }
-  });
-}
-
-// TABS
-function switchTab(name) {
-  const names = ['upcoming', 'recurring', 'past', 'add'];
-  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', names[i] === name));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById(`tab-${name}`).classList.add('active');
-  if (name !== 'add') { editingId = null; flyerFile = null; }
-}
-
-// TOAST
-let toastTimer;
-function toast(msg, type = 'success') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = `show ${type}`;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
-}
-
-// HELPERS
-function escHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('en-US', { weekday:'short', month:'long', day:'numeric', year:'numeric' });
-}
-function formatTime(timeStr) {
-  if (!timeStr) return '';
-  const [h, m] = timeStr.split(':').map(Number);
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  return `${((h % 12) || 12)}:${String(m).padStart(2,'0')} ${ampm}`;
-}
+<div id="toast"></div>
+<script src="../js/supabase-admin.js"></script>
+</body>
+</html>
