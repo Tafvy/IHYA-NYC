@@ -7,7 +7,7 @@
  */
 
 const SUPABASE_URL = 'https://dpinugfkomjxybdixsbz.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_HXKlYPpT9tisbt9qd06rWg_E-FAbSa0';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaW51Z2Zrb21qeHliZGl4c2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDAyNjksImV4cCI6MjA5MTkxNjI2OX0.-BUEodcxcDF1SiFn-QHJq70f6yl7KrX_RPgpo_Q7zgM';
 
 async function loadEvents() {
   try {
