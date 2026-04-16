@@ -157,6 +157,7 @@
       <button class="tab-btn active" onclick="switchTab('upcoming')">Upcoming</button>
       <button class="tab-btn" onclick="switchTab('recurring')">Recurring</button>
       <button class="tab-btn" onclick="switchTab('past')">Past</button>
+      <button class="tab-btn" onclick="switchTab('links')">🔗 Links</button>
       <button class="tab-btn" onclick="switchTab('add')">+ Add Event</button>
     </div>
 
@@ -173,6 +174,51 @@
     <div class="tab-content" id="tab-past">
       <div class="section-header"><div><div class="section-title">Past Events</div><div class="section-count" id="past-count"></div></div></div>
       <div class="events-list" id="past-list"><div class="empty-state"><div class="icon">🗂️</div><p>No past events.</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-links">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Links</div>
+          <div class="section-count" id="links-count"></div>
+        </div>
+        <button class="btn btn-primary" onclick="showLinkForm()">+ Add Link</button>
+      </div>
+
+      <!-- Link form -->
+      <div class="form-card" id="link-form-area" style="display:none">
+        <div class="form-card-title" id="link-form-title">Add New Link</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Title *</label>
+            <input type="text" id="lf-title" placeholder="e.g. RSVP: Stories of the Prophets" />
+          </div>
+          <div class="form-group full">
+            <label>URL *</label>
+            <input type="url" id="lf-url" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label>Emoji <span class="label-opt">(optional)</span></label>
+            <input type="text" id="lf-emoji" placeholder="e.g. 📅 🤲 🎙️" maxlength="4" />
+          </div>
+          <div class="form-group">
+            <label>Display Order</label>
+            <input type="text" id="lf-order" placeholder="0 = first" />
+          </div>
+          <div class="form-group full" style="flex-direction:row;align-items:center;gap:0.75rem;">
+            <input type="checkbox" id="lf-featured" style="width:18px;height:18px;accent-color:var(--green)" />
+            <label for="lf-featured" style="text-transform:none;letter-spacing:0;font-size:0.9rem;color:var(--text);">Featured link (outlined style)</label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" onclick="hideLinkForm()">Cancel</button>
+          <button class="btn btn-primary" id="save-link-btn" onclick="saveLink()">Save Link</button>
+        </div>
+      </div>
+
+      <div class="events-list" id="links-list-admin">
+        <div class="empty-state"><div class="icon">🔗</div><p>Loading links...</p></div>
+      </div>
     </div>
 
     <div class="tab-content" id="tab-add">
