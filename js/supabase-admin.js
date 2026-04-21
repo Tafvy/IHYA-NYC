@@ -162,6 +162,7 @@ function renderList(id, events, icon, msg) {
           <div style="margin-top:0.35rem;">
             <span class="event-card-type">${escHtml(ev.type || 'Event')}</span>
             ${ev.is_recurring ? '<span class="event-card-recurring">🔁 Recurring</span>' : ''}
+            ${ev.pinned ? '<span class="event-card-recurring">📌 Pinned</span>' : ''}
           </div>
         </div>
         <div class="event-card-actions">
@@ -185,6 +186,8 @@ function editEvent(id) {
   document.getElementById('f-rsvp').value            = ev.rsvp_link   || '';
   document.getElementById('f-description').value     = ev.description || '';
   document.getElementById('f-flyer-url').value       = ev.flyer_url   || '';
+  document.getElementById('f-pinned').checked        = ev.pinned      || false;
+  document.getElementById('f-sort-order').value      = ev.sort_order  != null ? ev.sort_order : '';
 
   if (ev.is_recurring) {
     setSchedule('recurring');
@@ -245,6 +248,8 @@ async function saveEvent() {
       location:      document.getElementById('f-location').value.trim() || null,
       rsvp_link:     document.getElementById('f-rsvp').value.trim() || null,
       description:   document.getElementById('f-description').value.trim() || null,
+      pinned:        document.getElementById('f-pinned').checked,
+      sort_order:    document.getElementById('f-sort-order').value !== '' ? parseInt(document.getElementById('f-sort-order').value) : null,
       flyer_url:     flyerUrl
     };
 
