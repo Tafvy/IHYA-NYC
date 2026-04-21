@@ -1,366 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M5H07X8KP4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-M5H07X8KP4');
-    </script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>IHYA NYC - Muslim Young Professionals Community | Spiritual Growth & Connection</title>
-    <meta name="description" content="IHYA NYC is a community for young Muslim professionals in New York City to reconnect with faith, purpose, and each other through weekly halaqas, monthly gatherings, and spiritual reflection.">
-    <meta name="keywords" content="Muslim community NYC, young professionals, halaqah, Islamic events NYC, Muslim gatherings, spiritual growth, faith community, NYC Muslims, Astoria mosque, Queens Islamic events">
-    <meta name="author" content="IHYA NYC">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ihyanyc.org/">
-    <meta property="og:title" content="IHYA NYC - A Space for Reconnection">
-    <meta property="og:description" content="Join young Muslim professionals in NYC for spiritual reflection, meaningful connections, and community growth. Weekly halaqas in Astoria, Queens.">
-    <meta property="og:image" content="https://ihyanyc.org/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/jpeg">
-    
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ihyanyc.org/">
-    <meta property="twitter:title" content="IHYA NYC - A Space for Reconnection">
-    <meta property="twitter:description" content="Join young Muslim professionals in NYC for spiritual reflection, meaningful connections, and community growth.">
-    <meta property="twitter:image" content="https://ihyanyc.org/og-image.jpg">
-    
-    <link rel="canonical" href="https://ihyanyc.org/">
-    <link rel="icon" type="image/png" sizes="32x32" href="ihya-logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="ihya-logo.png">
-    <link rel="apple-touch-icon" href="ihya-logo.png">
-    <link rel="shortcut icon" href="ihya-logo.png">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "IHYA NYC",
-      "url": "https://ihyanyc.org",
-      "logo": "https://ihyanyc.org/ihya-logo.png",
-      "description": "A community for young Muslim professionals to reconnect with faith, purpose, and each other",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "New York",
-        "addressRegion": "NY",
-        "addressCountry": "US"
-      },
-      "sameAs": [
-        "https://www.instagram.com/ihyanyc/",
-        "https://www.youtube.com/@ihyanyc",
-        "https://www.tiktok.com/@ihyanyc",
-        "https://open.spotify.com/show/3KNN86MbX9uvL10eRMBvOu"
-      ]
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IHYA NYC — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green:#1B5E41; --green-dark:#134332; --green-light:#2a7a56;
+      --gold:#B8A04A; --gold-light:#d4bc6a;
+      --cream:#F8F5F0; --cream-dark:#ede9e2;
+      --text:#1a1a1a; --text-muted:#6b6b6b; --white:#ffffff;
+      --danger:#c0392b; --danger-bg:#fdf0ef;
+      --success:#1B5E41; --success-bg:#edf7f2;
+      --shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md:0 4px 16px rgba(0,0,0,0.10);
+      --shadow-lg:0 8px 32px rgba(0,0,0,0.13);
+      --radius:10px;
     }
-    </script>
-    
-    <style>
-        :root { --ihya-green: #1B5E41; --ihya-green-light: #2D7A5A; --ihya-green-dark: #134332; --ihya-gold: #B8A04A; --ihya-cream: #F8F5F0; --ihya-sand: #E8E2D9; --ihya-text: #2C2C2C; --ihya-text-light: #5A5A5A; --ihya-white: #FFFFFF; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; color: var(--ihya-text); background: var(--ihya-cream); line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.2; }
-        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1rem 4%; display: flex; justify-content: space-between; align-items: center; background: rgba(248, 245, 240, 0.95); backdrop-filter: blur(10px); transition: all 0.3s ease; }
-        nav.scrolled { padding: 0.6rem 4%; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
-        .logo img { height: 55px; transition: all 0.3s ease; }
-        nav.scrolled .logo img { height: 45px; }
-        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--ihya-text); font-size: 0.9rem; font-weight: 500; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--ihya-green); }
-        .sustain-btn { background: var(--ihya-green) !important; color: var(--ihya-white) !important; padding: 0.75rem 1.75rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(27, 94, 65, 0.3); }
-        .sustain-btn:hover { background: var(--ihya-green-dark) !important; transform: translateY(-2px); }
-        .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; z-index: 1001; }
-        .mobile-menu-btn span { width: 25px; height: 2px; background: var(--ihya-text); transition: all 0.3s ease; }
-        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
-        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
-        .mobile-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; }
-        .mobile-overlay.active { display: block; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
 
-        /* Donation Modal */
-        .donation-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
-        .donation-modal.active { display: flex; }
-        .donation-modal-content { position: relative; width: 90%; max-width: 1000px; height: 85vh; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .donation-modal-header { background: var(--ihya-green); color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .donation-modal-header h3 { font-size: 1.2rem; }
-        .modal-close { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.3s; }
-        .modal-close:hover { background: rgba(255,255,255,0.2); }
-        .donation-modal iframe { width: 100%; height: calc(100% - 60px); border: none; }
+    /* LOGIN */
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,var(--green-dark) 0%,var(--green) 60%,var(--green-light) 100%);padding:2rem}
+    .login-card{background:var(--white);border-radius:16px;padding:3rem 2.5rem;width:100%;max-width:400px;box-shadow:var(--shadow-lg);text-align:center}
+    .login-logo{width:72px;height:72px;margin:0 auto 1.5rem;display:block}
+    .login-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--green-dark);margin-bottom:0.25rem}
+    .login-subtitle{color:var(--text-muted);font-size:0.9rem;margin-bottom:2rem}
+    .login-card input[type="password"]{width:100%;padding:0.85rem 1rem;border:1.5px solid var(--cream-dark);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;color:var(--text);background:var(--cream);transition:border-color 0.2s;margin-bottom:1rem}
+    .login-card input[type="password"]:focus{outline:none;border-color:var(--green)}
+    .btn-login{width:100%;padding:0.9rem;background:var(--green);color:var(--white);border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;transition:background 0.2s}
+    .btn-login:hover{background:var(--green-dark)}
+    .login-error{color:var(--danger);font-size:0.85rem;margin-top:0.75rem;display:none}
 
-        /* Hero */
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 4% 4rem; background: linear-gradient(rgba(19,67,50,0.8), rgba(19,67,50,0.6)), url('WhatsApp Image 2025-12-24 at 17.18.10.jpeg'); background-size: cover; background-position: center; background-attachment: fixed; position: relative; }
-        .hero-logo { width: 200px; margin-bottom: 2rem; animation: fadeInUp 0.8s ease forwards; filter: brightness(0) invert(1); }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--ihya-white); margin-bottom: 1.5rem; animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .hero p { font-size: 1.2rem; color: var(--ihya-cream); max-width: 600px; margin: 0 auto 2.5rem; animation: fadeInUp 0.8s ease 0.4s forwards; opacity: 0; }
-        .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.6s forwards; opacity: 0; }
-        .btn-primary { background: var(--ihya-green); color: var(--ihya-white); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(27,94,65,0.35); border: none; cursor: pointer; font-family: inherit; font-size: 1rem; }
-        .btn-primary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); transform: translateY(-2px); }
-        .btn-secondary { background: transparent; color: var(--ihya-white); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid var(--ihya-white); transition: all 0.3s ease; }
-        .btn-secondary:hover { background: var(--ihya-white); color: var(--ihya-green-dark); }
+    /* TOP BAR */
+    #admin-app{display:none}
+    .topbar{background:var(--green-dark);color:var(--white);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md)}
+    .topbar-brand{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold-light)}
+    .topbar-brand span{color:var(--white);font-weight:400}
+    .btn-logout{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:var(--white);padding:0.45rem 1.1rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.85rem;cursor:pointer;transition:background 0.2s}
+    .btn-logout:hover{background:rgba(255,255,255,0.2)}
 
-        /* Sections */
-        section { padding: 5rem 4%; }
-        .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
-        .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--ihya-green-dark); margin-bottom: 1rem; }
-        .section-header p { color: var(--ihya-text-light); font-size: 1.1rem; }
+    .admin-main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem}
 
-        /* Events */
-        #events { background: var(--ihya-white); padding: 5rem 0; }
-        #events .section-header { padding: 0 4%; }
-        .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; padding: 0 4%; }
-        .event-card { background: var(--ihya-cream); border-radius: 16px; overflow: hidden; transition: all 0.4s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .event-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
-        .event-flyer { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
-        .event-flyer-placeholder { width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, var(--ihya-green) 0%, var(--ihya-green-light) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ihya-white); padding: 2rem; text-align: center; }
-        .event-flyer-placeholder .date { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 600; line-height: 1; }
-        .event-flyer-placeholder .month { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; }
-        .event-flyer-placeholder .title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; }
-        .event-details { padding: 1.5rem; }
-        .event-details h3 { font-size: 1.4rem; color: var(--ihya-green-dark); margin-bottom: 0.75rem; }
-        .event-details p { color: var(--ihya-text-light); font-size: 0.95rem; margin-bottom: 1rem; }
-        .event-meta { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--ihya-sand); }
-        .event-meta-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.9rem; }
-        .event-meta-item svg { width: 18px; height: 18px; color: var(--ihya-green); flex-shrink: 0; }
-        .event-meta-item span { user-select: all; cursor: text; }
-        .event-tag { display: inline-block; padding: 0.25rem 0.75rem; background: rgba(184,160,74,0.15); color: var(--ihya-gold); border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem; }
-        .event-tag.weekly { background: rgba(27,94,65,0.1); color: var(--ihya-green); }
-        .events-carousel { display: none; }
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.3rem;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;border:none;transition:all 0.18s}
+    .btn-primary{background:var(--green);color:var(--white)}.btn-primary:hover{background:var(--green-dark)}
+    .btn-secondary{background:var(--white);color:var(--green);border:1.5px solid var(--green)}.btn-secondary:hover{background:var(--cream)}
+    .btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid #f5c6c2}.btn-danger:hover{background:#fbe0de}
+    .btn-sm{padding:0.4rem 0.85rem;font-size:0.82rem}
 
-        /* About */
-        #about { background: var(--ihya-sand); }
-        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .about-card { padding: 2.5rem; background: var(--ihya-white); border-radius: 20px; transition: all 0.4s ease; }
-        .about-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-        .about-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
-        .about-card h3 { font-size: 1.5rem; color: var(--ihya-green-dark); margin-bottom: 1rem; }
-        .about-card p { color: var(--ihya-text-light); }
+    /* TOAST */
+    #toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.5rem;border-radius:var(--radius);font-size:0.9rem;font-weight:500;box-shadow:var(--shadow-lg);z-index:9999;transform:translateY(80px);opacity:0;transition:all 0.3s ease;max-width:340px}
+    #toast.show{transform:translateY(0);opacity:1}
+    #toast.success{background:var(--success-bg);color:var(--success);border:1px solid #b6deca}
+    #toast.error{background:var(--danger-bg);color:var(--danger);border:1px solid #f5c6c2}
 
-        /* Sustain */
-        #sustain { background: linear-gradient(135deg, var(--ihya-green-dark) 0%, var(--ihya-green) 100%); color: var(--ihya-white); text-align: center; }
-        .sustain-content { max-width: 700px; margin: 0 auto; }
-        .sustain-content h2 { color: var(--ihya-white); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.5rem; }
-        .sustain-content > p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2.5rem; }
-        .donation-tiers { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
-        .tier-btn { padding: 0.875rem 2rem; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.3); border-radius: 50px; color: var(--ihya-white); font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
-        .tier-btn:hover, .tier-btn.active { background: var(--ihya-white); color: var(--ihya-green); border-color: var(--ihya-white); }
-        .donate-btn { background: var(--ihya-white); color: var(--ihya-green); padding: 1.25rem 3rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block; transition: all 0.3s ease; border: none; cursor: pointer; font-family: inherit; }
-        .donate-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+    /* FORM */
+    .form-card{background:var(--white);border-radius:14px;padding:2rem;box-shadow:var(--shadow-sm);margin-bottom:2rem;border:1px solid var(--cream-dark)}
+    .form-card-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--green-dark);margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:1px solid var(--cream-dark)}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .form-group{display:flex;flex-direction:column;gap:0.4rem}
+    .form-group.full{grid-column:1/-1}
+    label{font-size:0.82rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em}
+    .label-opt{font-size:0.75rem;color:#aaa;font-weight:400;text-transform:none;letter-spacing:0;margin-left:0.3rem}
+    input[type="text"],input[type="date"],input[type="url"],select,textarea{padding:0.75rem 0.9rem;border:1.5px solid var(--cream-dark);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.95rem;color:var(--text);background:var(--cream);transition:border-color 0.2s;width:100%}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);background:var(--white)}
+    textarea{resize:vertical;min-height:90px}
 
-        /* Stay Connected */
-        #subscribe { background: var(--ihya-cream); }
-        .subscribe-container { max-width: 600px; margin: 0 auto; text-align: center; }
-        .subscribe-container h2 { font-size: 2.5rem; color: var(--ihya-green-dark); margin-bottom: 1rem; }
-        .subscribe-container > p { color: var(--ihya-text-light); margin-bottom: 2rem; }
+    /* TIME PICKER */
+    .time-picker{display:flex;gap:0.5rem;align-items:center}
+    .time-picker select{flex:1;padding:0.75rem 0.5rem;text-align:center}
+    .time-picker .sep{color:var(--text-muted);font-weight:600;font-size:1.1rem;flex-shrink:0}
 
-        .subscribe-buttons { display: flex; flex-direction: column; gap: 1rem; max-width: 480px; margin: 0 auto 3rem; width: 100%; }
-        .subscribe-btn { display: flex; align-items: center; justify-content: center; gap: 0.75rem; width: 100%; padding: 1.1rem 1.5rem; background: var(--ihya-green); color: var(--ihya-white); text-decoration: none; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; transition: all 0.2s ease; box-shadow: 0 2px 12px rgba(27,94,65,0.2); }
-        .subscribe-btn:hover { background: var(--ihya-green-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(27,94,65,0.3); }
-        .subscribe-btn-whatsapp { background: transparent; color: var(--ihya-green); border: 2px solid var(--ihya-green); }
-        .subscribe-btn-whatsapp:hover { background: var(--ihya-green); color: var(--ihya-white); }
+    /* SCHEDULE TOGGLE */
+    .schedule-toggle{display:flex;gap:0.5rem}
+    .schedule-btn{flex:1;padding:0.65rem;border:1.5px solid var(--cream-dark);border-radius:8px;background:var(--cream);color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;transition:all 0.18s;text-align:center}
+    .schedule-btn.active{border-color:var(--green);background:rgba(27,94,65,0.08);color:var(--green)}
 
-        /* Social links */
-        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem; flex-wrap: wrap; }
-        .social-link { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: var(--ihya-white); border-radius: 50%; color: var(--ihya-green); text-decoration: none; transition: all 0.3s ease; }
-        .social-link:hover { background: var(--ihya-green); color: var(--ihya-white); transform: translateY(-3px); }
+    /* FLYER */
+    .flyer-upload-area{border:2px dashed var(--cream-dark);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--cream);position:relative}
+    .flyer-upload-area:hover,.flyer-upload-area.dragover{border-color:var(--green);background:#f0f7f4}
+    .flyer-upload-area input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .flyer-preview{max-height:160px;border-radius:8px;margin-top:0.75rem;display:none}
+    .upload-icon{font-size:2rem;margin-bottom:0.5rem}
+    .upload-label{color:var(--text-muted);font-size:0.88rem}
+    .upload-label strong{color:var(--green)}
 
-        /* Footer */
-        footer { background: var(--ihya-green-dark); color: var(--ihya-white); padding: 3rem 4%; text-align: center; }
-        .footer-logo-img { height: 60px; margin-bottom: 1rem; filter: brightness(0) invert(1); opacity: 0.9; }
-        footer p { opacity: 0.7; font-size: 0.9rem; }
+    .form-actions{display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--cream-dark)}
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    /* EVENT LIST */
+    .events-list{display:flex;flex-direction:column;gap:1rem}
+    .event-card{background:var(--white);border:1px solid var(--cream-dark);border-radius:12px;padding:1.25rem 1.5rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;transition:box-shadow 0.18s}
+    .event-card:hover{box-shadow:var(--shadow-md)}
+    .event-card-flyer{width:64px;height:64px;border-radius:8px;object-fit:cover}
+    .event-card-flyer-placeholder{width:64px;height:64px;border-radius:8px;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+    .event-card-info{min-width:0}
+    .event-card-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--green-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .event-card-meta{font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem}
+    .event-card-type{display:inline-block;font-size:0.72rem;font-weight:600;padding:0.15rem 0.55rem;border-radius:4px;background:rgba(27,94,65,0.1);color:var(--green);text-transform:uppercase;letter-spacing:0.04em;margin-top:0.35rem}
+    .event-card-recurring{display:inline-block;font-size:0.72rem;font-weight:600;padding:0.15rem 0.55rem;border-radius:4px;background:rgba(184,160,74,0.15);color:var(--gold);text-transform:uppercase;letter-spacing:0.04em;margin-top:0.35rem;margin-left:0.3rem}
+    .event-card-actions{display:flex;gap:0.5rem;flex-shrink:0}
 
-        @media (max-width: 768px) {
-            .mobile-menu-btn { display: flex; }
-            .nav-links { position: fixed; top: 0; right: -100%; width: 80%; max-width: 350px; height: 100vh; background: var(--ihya-cream); flex-direction: column; justify-content: center; gap: 2rem; transition: right 0.3s ease; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
-            .nav-links.active { right: 0; }
-            .events-grid { display: none; }
-            .events-carousel { display: block; padding: 0 4%; }
-            .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; padding-bottom: 1rem; scrollbar-width: none; }
-            .carousel-container::-webkit-scrollbar { display: none; }
-            .carousel-container .event-card { flex: 0 0 90%; scroll-snap-align: center; }
-            .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; }
-            .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ihya-sand); border: none; cursor: pointer; transition: all 0.3s ease; }
-            .carousel-dot.active { background: var(--ihya-green); width: 24px; border-radius: 4px; }
-            .social-link { width: 55px; height: 55px; }
-            .donation-modal-content { width: 95%; height: 90vh; }
-        }
-    </style>
+    /* TABS */
+    .tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:2px solid var(--cream-dark)}
+    .tab-btn{padding:0.65rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;color:var(--text-muted);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:all 0.18s}
+    .tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+    .tab-content{display:none}.tab-content.active{display:block}
+
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--green-dark)}
+    .section-count{font-size:0.85rem;color:var(--text-muted);margin-top:0.1rem}
+
+    .empty-state{text-align:center;padding:3rem 2rem;color:var(--text-muted);background:var(--white);border-radius:12px;border:1px solid var(--cream-dark)}
+    .empty-state .icon{font-size:2.5rem;margin-bottom:0.75rem}
+
+    .spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:0.4rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:640px){
+      .form-grid{grid-template-columns:1fr}
+      .event-card{grid-template-columns:1fr}
+      .event-card-flyer,.event-card-flyer-placeholder{display:none}
+      .topbar{padding:0 1rem}
+      .admin-main{padding:1.5rem 1rem}
+      .form-card{padding:1.25rem}
+      .form-actions{flex-direction:column}
+      .form-actions .btn{width:100%;justify-content:center}
+      .schedule-toggle{flex-direction:column}
+      .time-picker{flex-wrap:wrap}
+    }
+  </style>
 </head>
 <body>
-    <div class="donation-modal" id="donationModal">
-        <div class="donation-modal-content">
-            <div class="donation-modal-header">
-                <h3>Support IHYA NYC</h3>
-                <button class="modal-close" id="closeModal" aria-label="Close">&times;</button>
-            </div>
-            <iframe src="https://www.launchgood.com/v4/campaign/reviving_community_in_nyc_with_ihya" title="LaunchGood Donation" id="donationFrame"></iframe>
-        </div>
+
+<div id="login-screen">
+  <div class="login-card">
+    <img src="/images/ihya-logo.png" alt="IHYA NYC" class="login-logo" onerror="this.style.display='none'">
+    <h1 class="login-title">IHYA NYC</h1>
+    <p class="login-subtitle">Admin Portal — Events Management</p>
+    <input type="password" id="password-input" placeholder="Enter admin password" autocomplete="current-password" />
+    <button class="btn-login" onclick="attemptLogin()">Sign In</button>
+    <p class="login-error" id="login-error">Incorrect password. Please try again.</p>
+  </div>
+</div>
+
+<div id="admin-app">
+  <div class="topbar">
+    <div class="topbar-brand">IHYA <span>Admin</span></div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+
+  <div class="admin-main">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('upcoming')">Upcoming</button>
+      <button class="tab-btn" onclick="switchTab('recurring')">Recurring</button>
+      <button class="tab-btn" onclick="switchTab('past')">Past</button>
+      <button class="tab-btn" onclick="switchTab('links')">🔗 Links</button>
+      <button class="tab-btn" onclick="switchTab('add')">+ Add Event</button>
     </div>
 
-    <nav id="navbar">
-        <a href="#" class="logo"><img src="ihya-logo.png" alt="IHYA NYC Logo"></a>
-        <div class="nav-links" id="navLinks">
-            <!-- <a href="about.html">About</a> -->
-            <a href="#events">Events</a>
-            <a href="/links">Links</a>
-            <a href="#subscribe">Stay Connected</a>
-            <button class="sustain-btn" onclick="openDonationModal()">Sustain</button>
+    <div class="tab-content active" id="tab-upcoming">
+      <div class="section-header"><div><div class="section-title">Upcoming Events</div><div class="section-count" id="upcoming-count"></div></div></div>
+      <div class="events-list" id="upcoming-list"><div class="empty-state"><div class="icon">⏳</div><p>Loading...</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-recurring">
+      <div class="section-header"><div><div class="section-title">Recurring Events</div><div class="section-count" id="recurring-count"></div></div></div>
+      <div class="events-list" id="recurring-list"><div class="empty-state"><div class="icon">🔁</div><p>No recurring events yet.</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-past">
+      <div class="section-header"><div><div class="section-title">Past Events</div><div class="section-count" id="past-count"></div></div></div>
+      <div class="events-list" id="past-list"><div class="empty-state"><div class="icon">🗂️</div><p>No past events.</p></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-links">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Links</div>
+          <div class="section-count" id="links-count"></div>
         </div>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
+        <button class="btn btn-primary" onclick="showLinkForm()">+ Add Link</button>
+      </div>
 
-    <div class="mobile-overlay" id="mobileOverlay"></div>
+      <!-- Link form -->
+      <div class="form-card" id="link-form-area" style="display:none">
+        <div class="form-card-title" id="link-form-title">Add New Link</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Title *</label>
+            <input type="text" id="lf-title" placeholder="e.g. RSVP: Stories of the Prophets" />
+          </div>
+          <div class="form-group full">
+            <label>URL *</label>
+            <input type="url" id="lf-url" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label>Emoji <span class="label-opt">(optional)</span></label>
+            <input type="text" id="lf-emoji" placeholder="e.g. 📅 🤲 🎙️" maxlength="4" />
+          </div>
+          <div class="form-group">
+            <label>Display Order</label>
+            <input type="text" id="lf-order" placeholder="0 = first" />
+          </div>
+          <div class="form-group full" style="flex-direction:row;align-items:center;gap:0.75rem;">
+            <input type="checkbox" id="lf-featured" style="width:18px;height:18px;accent-color:var(--green)" />
+            <label for="lf-featured" style="text-transform:none;letter-spacing:0;font-size:0.9rem;color:var(--text);">Featured link (outlined style)</label>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-secondary" onclick="hideLinkForm()">Cancel</button>
+          <button class="btn btn-primary" id="save-link-btn" onclick="saveLink()">Save Link</button>
+        </div>
+      </div>
 
-    <section class="hero">
-        <div class="hero-content">
-            <img src="ihya-logo.png" alt="IHYA NYC - Muslim Young Professionals Community" class="hero-logo">
-            <h1>A Space for Reconnection</h1>
-            <p>IHYA is a collective for young professionals to reconnect — with their faith, purpose, and each other. Growing together through spiritual reflection, meaningful bonds, and shared growth.</p>
-            <div class="hero-cta">
-                <button class="btn-primary" onclick="openDonationModal()">Sustain Our Mission</button>
-                <a href="#events" class="btn-secondary">View Events</a>
+      <div class="events-list" id="links-list-admin">
+        <div class="empty-state"><div class="icon">🔗</div><p>Loading links...</p></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-add">
+      <div class="form-card">
+        <div class="form-card-title" id="form-title">Add New Event</div>
+        <input type="hidden" id="edit-id" />
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label>Event Title *</label>
+            <input type="text" id="f-title" placeholder="e.g. Weekly Halaqa – Stories of the Prophets" />
+          </div>
+
+          <div class="form-group">
+            <label>Event Type</label>
+            <select id="f-type">
+              <option value="Weekly Halaqa">Weekly Halaqa</option>
+              <option value="Special Event">Special Event</option>
+              <option value="Community Gathering">Community Gathering</option>
+              <option value="Fundraiser">Fundraiser</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Sisters Event">Sisters Event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Schedule Type *</label>
+            <div class="schedule-toggle">
+              <button type="button" class="schedule-btn active" id="btn-one-time" onclick="setSchedule('one-time')">One-Time</button>
+              <button type="button" class="schedule-btn" id="btn-recurring" onclick="setSchedule('recurring')">Weekly Recurring</button>
             </div>
-        </div>
-    </section>
+          </div>
 
-    <section id="events">
-        <div class="section-header">
-            <h2>Upcoming Events</h2>
-            <p>Join us for gatherings that nourish the soul and strengthen our community</p>
-        </div>
-        <div class="events-grid" id="eventsGrid"></div>
-        <div class="events-carousel">
-            <div class="carousel-container" id="eventsCarousel"></div>
-            <div class="carousel-dots" id="carouselDots"></div>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="section-header"><h2>Who We Are</h2><p>A refuge for the heart, where young professionals gather to nurture their faith and build lasting bonds</p></div>
-        <div class="about-grid">
-            <div class="about-card"><div class="about-icon">🤍</div><h3>A Refuge for the Heart</h3><p>In the busyness of city life, IHYA offers a sanctuary where you can pause, reflect, and reconnect with what truly matters.</p></div>
-            <div class="about-card"><div class="about-icon">🤝</div><h3>Meaningful Connections</h3><p>Through worship and fellowship, we build genuine brotherhood rooted in shared values and mutual support.</p></div>
-            <div class="about-card"><div class="about-icon">🌿</div><h3>Collective Growth</h3><p>We believe growth happens in community. Together, we study, reflect, and support one another on the path of faith.</p></div>
-        </div>
-    </section>
-
-    <section id="sustain">
-        <div class="sustain-content">
-            <h2>Sustain Our Mission</h2>
-            <p>Your support keeps IHYA running — funding our events, spaces, and programs that help brothers reconnect with faith and community.</p>
-            <div class="donation-tiers">
-                <button class="tier-btn" onclick="openDonationModal()">$25</button>
-                <button class="tier-btn" onclick="openDonationModal()">$50</button>
-                <button class="tier-btn active" onclick="openDonationModal()">$100</button>
-                <button class="tier-btn" onclick="openDonationModal()">$250</button>
+          <!-- ONE-TIME FIELDS -->
+          <div id="date-fields" style="display:contents">
+            <div class="form-group">
+              <label>Date *</label>
+              <input type="date" id="f-date" />
             </div>
-            <button class="donate-btn" onclick="openDonationModal()">Donate Now</button>
-            <p style="margin-top:1.5rem;font-size:0.9rem;opacity:0.8;">Monthly sustainers help us plan ahead and grow our impact</p>
-        </div>
-    </section>
-
-    <section id="subscribe">
-        <div class="subscribe-container">
-            <h2>Stay Connected</h2>
-            <p>Get updates on upcoming events and community news delivered to your inbox.</p>
-
-            <div class="subscribe-buttons">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8KVRzY6ut_OXb0lCte7_ufyD91UwGv0s3sSrz5S7u3sA3GQ/viewform" target="_blank" rel="noopener" class="subscribe-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    Join Our Email List
-                </a>
-                <a href="https://chat.whatsapp.com/EZHH3QSha9v0X2q5nPhfyf" target="_blank" rel="noopener" class="subscribe-btn subscribe-btn-whatsapp">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Join WhatsApp Announcements
-                </a>
+            <div class="form-group">
+              <label>Time <span class="label-opt">(optional)</span></label>
+              <div class="time-picker">
+                <select id="f-time-hour" style="width:auto">
+                  <option value="">--</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <span class="sep">:</span>
+                <select id="f-time-min" style="width:auto">
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+                <select id="f-time-ampm" style="width:auto">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
             </div>
+          </div>
 
-            <div class="social-links">
-                <a href="https://www.instagram.com/ihyanyc/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                <a href="https://www.youtube.com/@ihyanyc" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-                <a href="https://www.tiktok.com/@ihyanyc" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
-                <a href="https://open.spotify.com/show/3KNN86MbX9uvL10eRMBvOu" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Spotify"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
-                <a href="https://chat.whatsapp.com/EZHH3QSha9v0X2q5nPhfyf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <!-- RECURRING FIELDS -->
+          <div id="recurring-fields" style="display:none">
+            <div class="form-group">
+              <label>Day of Week</label>
+              <select id="f-day">
+                <option value="Sunday">Every Sunday</option>
+                <option value="Monday">Every Monday</option>
+                <option value="Tuesday">Every Tuesday</option>
+                <option value="Wednesday">Every Wednesday</option>
+                <option value="Thursday">Every Thursday</option>
+                <option value="Friday">Every Friday</option>
+                <option value="Saturday">Every Saturday</option>
+              </select>
             </div>
+            <div class="form-group">
+              <label>Time <span class="label-opt">(optional)</span></label>
+              <div class="time-picker">
+                <select id="f-rtime-hour" style="width:auto">
+                  <option value="">--</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <span class="sep">:</span>
+                <select id="f-rtime-min" style="width:auto">
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+                <select id="f-rtime-ampm" style="width:auto">
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Location <span class="label-opt">(optional)</span></label>
+            <input type="text" id="f-location" placeholder="e.g. Masjid Baitul Mukarram, Astoria" />
+          </div>
+
+          <div class="form-group">
+            <label>RSVP / Registration Link <span class="label-opt">(optional)</span></label>
+            <input type="url" id="f-rsvp" placeholder="https://..." />
+          </div>
+
+          <div class="form-group full">
+            <label>Description <span class="label-opt">(optional)</span></label>
+            <textarea id="f-description" placeholder="Brief description of the event..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Display Order <span class="label-opt">(optional — lower = appears first)</span></label>
+            <input type="text" id="f-sort-order" placeholder="e.g. 0, 1, 2..." />
+          </div>
+
+          <div class="form-group" style="justify-content:center;">
+            <label>Pin to Events Page</label>
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-top:0.25rem;">
+              <input type="checkbox" id="f-pinned" style="width:18px;height:18px;accent-color:var(--green)" />
+              <span style="font-size:0.88rem;color:var(--text-muted);">Always show on site (even after date passes)</span>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Event Flyer <span class="label-opt">(optional)</span></label>
+            <div class="flyer-upload-area" id="flyer-drop-zone">
+              <input type="file" id="f-flyer" accept="image/*" onchange="handleFlyerSelect(this)" />
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-label"><strong>Click to upload</strong> or drag & drop<br>JPG, PNG, WebP · Max 5MB</div>
+              <img id="flyer-preview" class="flyer-preview" alt="Flyer preview" />
+            </div>
+            <input type="hidden" id="f-flyer-url" />
+          </div>
+
         </div>
-    </section>
 
-    <footer>
-        <img src="ihya-logo.png" alt="IHYA NYC" class="footer-logo-img">
-        <p>A space for young professionals to reconnect with faith, purpose, and each other.</p>
-        <p style="margin-top:1.5rem;">© 2026 IHYA NYC. All rights reserved.</p>
-    </footer>
+        <div class="form-actions">
+          <button class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+          <button class="btn btn-primary" id="save-btn" onclick="saveEvent()">Publish Event</button>
+        </div>
+      </div>
+    </div>
 
-    <script src="js/load-events-supabase.js"></script>
+  </div>
+</div>
 
-    <script>
-        function openDonationModal() {
-            document.getElementById('donationModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeDonationModal() {
-            document.getElementById('donationModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        document.getElementById('closeModal').addEventListener('click', closeDonationModal);
-        document.getElementById('donationModal').addEventListener('click', function(e) {
-            if (e.target === this) closeDonationModal();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeDonationModal();
-        });
-
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        const mobileOverlay = document.getElementById('mobileOverlay');
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.classList.toggle('active');
-            mobileOverlay.classList.toggle('active');
-        });
-        mobileOverlay.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            mobileMenuBtn.classList.remove('active');
-            mobileOverlay.classList.remove('active');
-        });
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-            });
-        });
-        document.addEventListener('click', (e) => {
-            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-            }
-        });
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-        });
-        document.querySelectorAll('.tier-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-    </script>
+<div id="toast"></div>
+<script src="../js/supabase-admin.js"></script>
 </body>
 </html>
