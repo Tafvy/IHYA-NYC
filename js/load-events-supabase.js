@@ -1,26 +1,12 @@
 /**
  * IHYA NYC — Supabase Events Loader
- * Reads from Supabase, renders using IHYA's exact CSS classes.
+ * Logic:
+ * 1. Show upcoming events + pinned events, sorted by sort_order then date
+ * 2. If nothing to show, fall back to most recent past event
  */
 
 const SUPABASE_URL = 'https://dpinugfkomjxybdixsbz.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaW51Z2Zrb21qeHliZGl4c2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDAyNjksImV4cCI6MjA5MTkxNjI2OX0.-BUEodcxcDF1SiFn-QHJq70f6yl7KrX_RPgpo_Q7zgM';
-
-async function loadEvents() {
-  try {
-    const today = new Date().toISOString().split('T')[0];
-    // Fetch upcoming one-time events AND all recurring events
-    const [oneTime, recurring] = await Promise.all([
-      sbGet(`events?is_recurring=eq.false&date=gte.${today}&order=date.asc&select=*`),
-      sbGet(`events?is_recurring=eq.true&select=*`)
-    ]);
-    const events = [...(recurring || []), ...(oneTime || [])];
-    renderAll(events);
-  } catch (err) {
-    console.error('Failed to load events:', err);
-    showError();
-  }
-}
 
 async function sbGet(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -28,6 +14,45 @@ async function sbGet(path) {
   });
   if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
   return res.json();
+}
+
+async function loadEvents() {
+  try {
+    const today = new Date().toISOString().split('T')[0];
+
+    // Fetch all in parallel
+    const [upcoming, pinned, recurring, pastFallback] = await Promise.all([
+      sbGet(`events?is_recurring=eq.false&pinned=eq.false&date=gte.${today}&order=sort_order.asc.nullslast,date.asc&select=*`),
+      sbGet(`events?pinned=eq.true&order=sort_order.asc.nullslast,date.asc&select=*`),
+      sbGet(`events?is_recurring=eq.true&order=sort_order.asc.nullslast&select=*`),
+      sbGet(`events?is_recurring=eq.false&pinned=eq.false&date=lt.${today}&order=date.desc&limit=1&select=*`)
+    ]);
+
+    // Combine: recurring first, then pinned, then upcoming
+    let events = [
+      ...(recurring  || []),
+      ...(pinned     || []),
+      ...(upcoming   || [])
+    ];
+
+    // Deduplicate by id (pinned might overlap with upcoming)
+    const seen = new Set();
+    events = events.filter(e => {
+      if (seen.has(e.id)) return false;
+      seen.add(e.id);
+      return true;
+    });
+
+    // If nothing to show, fall back to most recent past event
+    if (events.length === 0 && pastFallback && pastFallback.length > 0) {
+      events = pastFallback;
+    }
+
+    renderAll(events);
+  } catch (err) {
+    console.error('Failed to load events:', err);
+    showError();
+  }
 }
 
 function buildCard(ev, compact) {
@@ -42,7 +67,6 @@ function buildCard(ev, compact) {
   const shortDesc = compact && desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
   const typeClass = (ev.type || '').toLowerCase().includes('weekly') ? 'weekly' : '';
 
-  // Flyer or placeholder
   const flyerHTML = ev.flyer_url
     ? `<img src="${ev.flyer_url}" alt="${escHtml(ev.title)}" class="event-flyer" />`
     : `<div class="event-flyer-placeholder">
@@ -51,7 +75,6 @@ function buildCard(ev, compact) {
          <span class="title">${escHtml(ev.title)}</span>
        </div>`;
 
-  // Meta items
   const datetimeMeta = (dateStr || timeStr) ? `
     <div class="event-meta-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -87,7 +110,6 @@ function buildCard(ev, compact) {
 }
 
 function renderAll(events) {
-  // Desktop grid
   const grid = document.getElementById('eventsGrid');
   if (grid) {
     grid.innerHTML = events.length
@@ -95,7 +117,6 @@ function renderAll(events) {
       : `<div style="text-align:center;padding:3rem 1rem;color:#6b6b6b;grid-column:1/-1;"><p>No upcoming events. Check back soon!</p></div>`;
   }
 
-  // Mobile carousel
   const carousel = document.getElementById('eventsCarousel');
   const dots     = document.getElementById('carouselDots');
   if (carousel) {
@@ -104,7 +125,6 @@ function renderAll(events) {
       return;
     }
     carousel.innerHTML = events.map(ev => buildCard(ev, true)).join('');
-
     if (dots) {
       dots.innerHTML = '';
       events.forEach((_, i) => {
@@ -117,7 +137,6 @@ function renderAll(events) {
         };
         dots.appendChild(dot);
       });
-
       carousel.addEventListener('scroll', () => {
         const cards = carousel.querySelectorAll('.event-card');
         if (!cards.length) return;
@@ -136,9 +155,9 @@ function showError() {
   if (carousel) carousel.innerHTML = msg;
 }
 
-function escHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function formatTime(t) {
