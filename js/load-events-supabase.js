@@ -1,8 +1,9 @@
 /**
  * IHYA NYC — Supabase Events Loader
- * Logic:
- * 1. Show upcoming events + pinned events, sorted by sort_order then date
- * 2. If nothing to show, fall back to most recent past event
+ * Display logic:
+ * - Show upcoming events + pinned events + recurring events
+ * - Sorted purely by sort_order (nulls last), then date
+ * - If nothing to show, fall back to most recent past event
  */
 
 const SUPABASE_URL = 'https://dpinugfkomjxybdixsbz.supabase.co';
@@ -20,22 +21,18 @@ async function loadEvents() {
   try {
     const today = new Date().toISOString().split('T')[0];
 
-    // Fetch all in parallel
-    const [upcoming, pinned, recurring, pastFallback] = await Promise.all([
-      sbGet(`events?is_recurring=eq.false&pinned=eq.false&date=gte.${today}&order=sort_order.asc.nullslast,date.asc&select=*`),
-      sbGet(`events?pinned=eq.true&order=sort_order.asc.nullslast,date.asc&select=*`),
-      sbGet(`events?is_recurring=eq.true&order=sort_order.asc.nullslast&select=*`),
+    // Fetch all visible events in one query:
+    // - upcoming one-time (not pinned)
+    // - pinned (any date)
+    // - recurring
+    const [visible, pastFallback] = await Promise.all([
+      sbGet(`events?or=(is_recurring.eq.true,pinned.eq.true,and(is_recurring.eq.false,pinned.eq.false,date.gte.${today}))&order=sort_order.asc.nullslast,date.asc.nullslast&select=*`),
       sbGet(`events?is_recurring=eq.false&pinned=eq.false&date=lt.${today}&order=date.desc&limit=1&select=*`)
     ]);
 
-    // Combine: recurring first, then pinned, then upcoming
-    let events = [
-      ...(recurring  || []),
-      ...(pinned     || []),
-      ...(upcoming   || [])
-    ];
+    let events = visible || [];
 
-    // Deduplicate by id (pinned might overlap with upcoming)
+    // Deduplicate by id just in case
     const seen = new Set();
     events = events.filter(e => {
       if (seen.has(e.id)) return false;
@@ -70,11 +67,11 @@ function buildCard(ev, compact) {
   // Audience pill
   let audiencePill = '';
   if (ev.audience === 'Brothers Only') {
-    audiencePill = `<span class="event-tag event-tag-brothers">Brothers Only</span>`;
+    audiencePill = `<span class="event-tag-brothers">Brothers Only</span>`;
   } else if (ev.audience === 'Sisters Only') {
-    audiencePill = `<span class="event-tag event-tag-sisters">Sisters Only</span>`;
+    audiencePill = `<span class="event-tag-sisters">Sisters Only</span>`;
   } else if (ev.audience === 'Community') {
-    audiencePill = `<span class="event-tag event-tag-community">Community</span>`;
+    audiencePill = `<span class="event-tag-community">Community</span>`;
   }
 
   const flyerHTML = ev.flyer_url
@@ -107,8 +104,10 @@ function buildCard(ev, compact) {
     <div class="event-card">
       ${flyerHTML}
       <div class="event-details">
-        <span class="event-tag ${typeClass}">${escHtml(ev.type || 'Event')}</span>
-        ${audiencePill}
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.3rem;margin-bottom:0.75rem;">
+          <span class="event-tag ${typeClass}" style="margin-bottom:0">${escHtml(ev.type || 'Event')}</span>
+          ${audiencePill}
+        </div>
         <h3>${escHtml(ev.title)}</h3>
         ${shortDesc ? `<p>${escHtml(shortDesc)}</p>` : ''}
         <div class="event-meta">
