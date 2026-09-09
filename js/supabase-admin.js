@@ -2,7 +2,7 @@
  * IHYA NYC - Supabase Admin JS
  */
 
-const PASSWORD_HASH = '460b33920fa4238f8bc78abbe86cc61c2c404567cc3a13887a6c3a9be81eab23';
+const PASSWORD_HASH = '49bb96235b8c366808609dc236c9670e15e7b0929a513bff3387c03585e35321';
 const SUPABASE_URL  = 'https://dpinugfkomjxybdixsbz.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwaW51Z2Zrb21qeHliZGl4c2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDAyNjksImV4cCI6MjA5MTkxNjI2OX0.-BUEodcxcDF1SiFn-QHJq70f6yl7KrX_RPgpo_Q7zgM';
 
